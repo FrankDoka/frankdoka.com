@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import Image, { type ImageProps } from 'next/image'
 
 import { Border } from '@/components/Border'
 import { Callout } from '@/components/Callout'
@@ -9,6 +10,20 @@ import { TagList, TagListItem } from '@/components/TagList'
 export const MDXComponents = {
   Callout,
   pre: CodeBlock,
+  // Diagrams/illustrations shown in full (no crop), unlike the photo `img`
+  // renderer above. Pass an imported image plus alt text and an optional caption.
+  Figure: function Figure({ src, alt, caption }: { src: ImageProps['src']; alt: string; caption?: string }) {
+    return (
+      <figure className="my-10 overflow-hidden rounded-4xl border border-[var(--theme-border)] bg-[var(--theme-bg-elevated)] max-sm:-mx-6">
+        <Image src={src} alt={alt} sizes="(min-width: 768px) 42rem, 100vw" className="h-auto w-full" />
+        {caption ? (
+          <figcaption className="border-t border-[var(--theme-border)] px-6 py-3 text-center text-sm text-[var(--theme-text-muted)]">
+            {caption}
+          </figcaption>
+        ) : null}
+      </figure>
+    )
+  },
   img: function Img({ className, ...props }: React.ComponentPropsWithoutRef<typeof GrayscaleTransitionImage>) {
     return (
       <div className={clsx('group isolate my-10 overflow-hidden rounded-4xl bg-[var(--theme-bg-elevated)] max-sm:-mx-6', className)}>

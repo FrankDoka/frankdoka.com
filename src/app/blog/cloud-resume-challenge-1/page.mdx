@@ -1,5 +1,6 @@
 import { BlogPost } from '@/lib/mdx.ts'
 import { faCloud } from '@fortawesome/free-solid-svg-icons'
+import diagram from '../../projects/cloud-resume-challenge/cloud-resume.svg'
 
 export const post = {
   ...BlogPost,
@@ -20,6 +21,8 @@ export const metadata = {
 # Cloud Resume Challenge — Phase 1: AWS Accounts & Organization
 
 Before writing any application code, I stood up a proper AWS account structure — the kind you'd want in a real organization, not just a single root account with everything in it.
+
+<Figure src={diagram} alt="Cloud Resume Challenge architecture: S3 and CloudFront serve the static frontend, API Gateway and Lambda power the visitor counter, and DynamoDB stores the count." caption="The serverless architecture this series builds toward." />
 
 ## What I Set Up
 

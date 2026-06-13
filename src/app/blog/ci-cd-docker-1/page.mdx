@@ -1,5 +1,6 @@
 import { BlogPost } from '@/lib/mdx.ts'
 import { faGears } from '@fortawesome/free-solid-svg-icons'
+import diagram from '../../projects/ci-cd-docker-pipeline/cicd-pipeline.svg'
 
 export const post = {
   ...BlogPost,
@@ -20,6 +21,8 @@ export const metadata = {
 # CI/CD Pipeline for NGINX on Docker — Phase 1: Architecture & Tools
 
 Phase 1 defines the architecture and introduces the four tools that each own one layer of the pipeline.
+
+<Figure src={diagram} alt="CI/CD pipeline architecture: Terraform provisions EC2 infrastructure, Ansible configures the hosts, Docker packages NGINX, and Jenkins orchestrates the pipeline on every push." caption="The four-layer pipeline — Terraform, Ansible, Docker, and Jenkins." />
 
 ## The Stack
 

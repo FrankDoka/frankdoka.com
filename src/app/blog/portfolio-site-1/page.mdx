@@ -1,5 +1,6 @@
 import { BlogPost } from '@/lib/mdx.ts'
 import { faCode } from '@fortawesome/free-solid-svg-icons'
+import diagram from '../../projects/portfolio-site/portfolio-site.svg'
 
 export const post = {
   ...BlogPost,
@@ -20,6 +21,8 @@ export const metadata = {
 # Portfolio Site Rebuild — Part 1: Planning & Stack Selection
 
 My old site started as the [Cloud Resume Challenge](/projects/cloud-resume-challenge) — static HTML on S3, CloudFront in front, Lambda visitor counter in back. It proved I could build on AWS, but a single-page resume doesn't scale into a portfolio. I needed project pages, build logs, and room to grow.
+
+<Figure src={diagram} alt="Portfolio site architecture: an MDX content pipeline validated by Zod feeds a Next.js 15 app with Pagefind search, deployed as a static export to Cloudflare Pages." caption="The Next.js 15 + MDX architecture this series builds." />
 
 ## Requirements
 

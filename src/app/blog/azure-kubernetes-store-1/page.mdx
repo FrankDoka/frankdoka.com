@@ -1,5 +1,6 @@
 import { BlogPost } from '@/lib/mdx.ts'
 import { faStore } from '@fortawesome/free-solid-svg-icons'
+import diagram from '../../projects/azure-kubernetes-store/azure-k8s.svg'
 
 export const post = {
   ...BlogPost,
@@ -20,6 +21,8 @@ export const metadata = {
 # Azure Web Store on Kubernetes — Environment Setup & Docker Images
 
 This build log covers the foundation: setting up Azure resources and building Docker images for all four microservices before deploying to Kubernetes.
+
+<Figure src={diagram} alt="Azure Kubernetes web store architecture: customers authenticate via Azure B2C, traffic routes through API Management to Spring Boot microservices on AKS, with GitHub Actions pushing images to ACR." caption="The AKS microservices architecture this project deploys." />
 
 ## Azure Resources
 

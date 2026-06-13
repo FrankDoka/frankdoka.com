@@ -1,5 +1,6 @@
 import { BlogPost } from '@/lib/mdx.ts'
 import { faMicrophone } from '@fortawesome/free-solid-svg-icons'
+import diagram from '../../projects/text-to-speech/text-to-speech.svg'
 
 export const post = {
   ...BlogPost,
@@ -20,6 +21,8 @@ export const metadata = {
 # Text-to-Speech Serverless App — Phase 1: Frontend & Login System
 
 Phase 1 establishes the user-facing layer: a React frontend with secure authentication, ready to submit text to the serverless backend built in later phases.
+
+<Figure src={diagram} alt="Text-to-speech serverless architecture: an Amplify React frontend with Cognito auth calls API Gateway and Lambda, which use Amazon Translate and Polly, storing audio in S3." caption="The serverless text-to-speech architecture this series builds toward." />
 
 ## What I Built
 
