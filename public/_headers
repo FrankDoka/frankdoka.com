@@ -5,3 +5,13 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+
+# next/og images are emitted as extensionless files by the static export, so
+# Cloudflare serves them as application/octet-stream. Force image/png so social
+# scrapers (LinkedIn, X, Slack, iMessage) render the link-preview cards.
+/opengraph-image
+  Content-Type: image/png
+/blog/*/opengraph-image
+  Content-Type: image/png
+/projects/*/opengraph-image
+  Content-Type: image/png
