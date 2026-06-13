@@ -19,7 +19,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const aboutMeText =
-  'Infrastructure and Cloud Engineer focused on Azure, AWS, and automation. I build and manage hybrid environments with Entra ID, deploy containerized workloads on Kubernetes, and define everything as code with Terraform. Python and PowerShell are my go-to tools for automating infrastructure at scale — backed by years of hands-on endpoint and identity management.'
+  'Infrastructure Architect and Cloud Engineer specializing in Azure, AWS, and automation. I design and operate hybrid cloud environments around Entra ID, run containerized workloads on Kubernetes, and manage everything as code with Terraform. Python and PowerShell drive my automation at scale — grounded in years of hands-on endpoint, identity, and security operations in regulated environments.'
 
 const skills: [string, import('next/image').StaticImageData][] = [
   ['AWS', skillAWS],

@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Frank Doka — Infrastructure Architect',
     short_name: 'Frank Doka',
     description:
-      'Infrastructure and Cloud Engineer focused on Azure, AWS, and automation with Terraform, Python, and PowerShell.',
+      'Infrastructure Architect and Cloud Engineer specializing in Azure, AWS, and automation with Terraform, Python, and PowerShell.',
     start_url: '/',
     display: 'standalone',
     background_color: '#0a0a0a',

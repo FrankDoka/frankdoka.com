@@ -9,10 +9,10 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Infrastructure and Cloud Engineer focused on Azure, AWS, and automation. Education, certifications, experience, and values.',
+    'Infrastructure Architect and Cloud Engineer specializing in Azure, AWS, and automation. Education, certifications, experience, and the principles I work by.',
   openGraph: {
     title: 'About — Frank Doka',
-    description: 'Infrastructure and Cloud Engineer focused on Azure, AWS, and automation.',
+    description: 'Infrastructure Architect and Cloud Engineer specializing in Azure, AWS, and automation.',
     url: 'https://frankdoka.com/about',
   },
 }
@@ -46,9 +46,10 @@ export default function AboutPage() {
     <div data-pagefind-body>
       <PageIntro eyebrow="About" title="Frank Doka">
         <p>
-          Infrastructure and Cloud Engineer focused on Azure, AWS, and automation.
-          I build and manage hybrid environments, deploy containerized workloads on Kubernetes,
-          and define everything as code with Terraform, Python, and PowerShell.
+          Infrastructure Architect and Cloud Engineer specializing in Azure, AWS, and automation.
+          I design and operate hybrid cloud environments, run containerized workloads on Kubernetes,
+          and manage everything as code with Terraform, Python, and PowerShell — with a foundation
+          in endpoint, identity, and security operations.
         </p>
       </PageIntro>
 

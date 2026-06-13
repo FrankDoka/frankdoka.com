@@ -43,7 +43,7 @@ export default async function ProjectSection({ limit }: { limit?: number } = {})
   const visible = limit ? projects.slice(0, limit) : projects
 
   return (
-    <Section eyebrow="Projects" title="Things I've built.">
+    <Section eyebrow="Projects" title="Things I've Built">
       <FadeInStagger className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {visible.map((project) => (
           <ProjectCard key={project.title} project={project} />

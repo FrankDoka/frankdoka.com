@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     absolute: 'Frank Doka | Infrastructure Architect'
   },
   description:
-    'Infrastructure and Cloud Engineer focused on Azure, AWS, and automation. Building hybrid environments, deploying containerized workloads on Kubernetes, and defining infrastructure as code with Terraform, Python, and PowerShell.'
+    'Infrastructure Architect and Cloud Engineer specializing in Azure, AWS, and automation. I design hybrid cloud environments, run containerized workloads on Kubernetes, and manage infrastructure as code with Terraform, Python, and PowerShell.'
 }
 
 export default async function Home() {

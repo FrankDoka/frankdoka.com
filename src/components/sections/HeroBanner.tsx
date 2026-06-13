@@ -12,14 +12,12 @@ export default function HeroBanner() {
         <p className="mt-6 text-xl text-[var(--theme-text-secondary)]">
           <SlotWord
             words={[
-              'Builder.',
-              'Automator.',
-              'Problem Solver.',
               'Cloud Engineer.',
-              'Pipeline Builder.',
-              'Linux Enthusiast.',
-              'Terraform Writer.',
-              'Container Wrangler.',
+              'DevOps Practitioner.',
+              'Automation Engineer.',
+              'Endpoint Engineer.',
+              'Platform Builder.',
+              'Kubernetes Operator.',
             ]}
             final="Infrastructure Architect."
           />
