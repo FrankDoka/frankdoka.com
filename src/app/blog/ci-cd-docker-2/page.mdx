@@ -1,0 +1,34 @@
+import { BlogPost } from '@/lib/mdx.ts'
+import { faGears } from '@fortawesome/free-solid-svg-icons'
+
+export const post = {
+  ...BlogPost,
+  type: 'Article',
+  icon: faGears,
+  date: '2023-09-08',
+  title: 'CI/CD Pipeline for NGINX on Docker — Phase 2: Creating the Docker Image',
+  description:
+    'Writing the Dockerfile, bundling NGINX with a self-signed OpenSSL certificate, testing locally, and pushing to Docker Hub.',
+  tags: ['CI/CD', 'Docker']
+}
+
+export const metadata = {
+  title: post.title,
+  description: post.description
+}
+
+# CI/CD Pipeline for NGINX on Docker — Phase 2: Creating the Docker Image
+
+Phase 2 packages the web server into a portable container — ready to run identically on a laptop or an EC2 instance.
+
+## What I Built
+
+1. **Static site** — Simple HTML/CSS page. The focus is on the pipeline, not the frontend.
+2. **NGINX configuration** — Configured NGINX to serve the static content over HTTPS using a self-signed OpenSSL certificate.
+3. **Dockerfile** — Multi-step build: installs NGINX, generates the SSL certificate, copies the site content and NGINX config into the image.
+4. **Local testing** — Ran `docker build` and `docker run` locally, hit `https://localhost`, confirmed the certificate was served and the page rendered correctly.
+5. **Docker Hub push** — Tagged and pushed the image to Docker Hub so Ansible can pull it onto EC2 in Phase 4.
+
+## What's Next
+
+Phase 3 uses Terraform to provision the EC2 instance that will host this container.

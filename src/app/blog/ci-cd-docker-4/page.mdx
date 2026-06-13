@@ -1,0 +1,39 @@
+import { BlogPost } from '@/lib/mdx.ts'
+import { faGears } from '@fortawesome/free-solid-svg-icons'
+
+export const post = {
+  ...BlogPost,
+  type: 'Article',
+  icon: faGears,
+  date: '2023-09-22',
+  title: 'CI/CD Pipeline for NGINX on Docker — Phase 4: Ansible & Dynamic Inventory',
+  description:
+    'Configuring EC2 instances with Ansible playbooks and AWS dynamic inventory — installing Docker and deploying the container without hardcoded hosts.',
+  tags: ['CI/CD', 'Ansible', 'AWS']
+}
+
+export const metadata = {
+  title: post.title,
+  description: post.description
+}
+
+# CI/CD Pipeline for NGINX on Docker — Phase 4: Ansible & Dynamic Inventory
+
+Phase 4 configures the Terraform-provisioned EC2 instance and deploys the Docker container — without ever hardcoding a host IP.
+
+## What I Built
+
+1. **AWS dynamic inventory** — Instead of a static hosts file, Ansible queries the AWS API at runtime to discover which EC2 instances exist, their IPs, and their tags. If Terraform creates a new instance, Ansible finds it automatically on the next run.
+2. **Configuration playbook** — An Ansible playbook that SSHs into the discovered instances and:
+   - Installs Docker
+   - Pulls the NGINX image from Docker Hub
+   - Runs the container with the correct port bindings (80, 443)
+   - Configures the container to restart on reboot
+
+## Why Dynamic Inventory
+
+Static inventory breaks as soon as infrastructure changes — a new instance gets a different IP and the playbook targets the wrong host. Dynamic inventory solves this by querying AWS each time. The pipeline doesn't care *which* instance exists, only that it can find and configure whatever Terraform created.
+
+## What's Next
+
+Phase 5 wires everything together with Jenkins — a single Git push triggers Terraform, then Ansible, then a smoke test confirming the deployment is live.

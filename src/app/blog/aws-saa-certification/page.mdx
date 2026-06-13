@@ -1,0 +1,45 @@
+import { BlogPost } from '@/lib/mdx.ts'
+import { faAward } from '@fortawesome/free-solid-svg-icons'
+
+export const post = {
+  ...BlogPost,
+  type: 'Article',
+  icon: faAward,
+  date: '2023-08-01',
+  title: 'Passing the AWS Solutions Architect Associate Exam',
+  description:
+    'How I passed SAA-C03 — exam format, the study strategy that worked, and what I would do differently.',
+  tags: ['AWS', 'Cloud']
+}
+
+export const metadata = {
+  title: post.title,
+  description: post.description
+}
+
+# Passing the AWS Solutions Architect Associate Exam
+
+I passed the **SAA-C03** on my first attempt. Here's the format, what I used to study, and what actually mattered.
+
+[Credly Badge](https://www.credly.com/badges/c13f0728-57ac-4e67-9644-ca9f310a135d/public_url)
+
+## Exam Format
+
+- **65 questions**, 130 minutes
+- Scored 100–1000, **720+ to pass** (~72% accuracy)
+- $150 USD
+- Mix of single-answer and multiple-answer scenario questions
+
+## What Worked
+
+1. **Hands-on labs first** — I built real projects on the AWS Free Tier before touching study materials. Having provisioned actual VPCs, Lambda functions, and S3 buckets made the exam scenarios feel familiar rather than abstract.
+2. **A Cloud Guru + official practice exams** — The course gave structure; the official practice exams showed exactly how AWS phrases questions and which distractors to watch for.
+3. **Focus on "why"** — The exam rarely asks what a service *does*. It asks which service to pick *given constraints* — cost, latency, durability, compliance. Understanding trade-offs matters more than memorizing feature lists.
+4. **Weak-area drilling** — After each practice exam, I reviewed every wrong answer and spent extra time on the domains where I scored lowest (for me: database selection and migration strategies).
+
+## Key Domains
+
+- **Resilient architectures** — Multi-AZ, multi-region, auto scaling, decoupled designs
+- **High-performing architectures** — Caching (ElastiCache, CloudFront), storage tiers, compute selection
+- **Secure architectures** — IAM policies, encryption at rest/in transit, VPC security groups vs NACLs
+- **Cost-optimized architectures** — Reserved vs Spot vs On-Demand, S3 storage classes, right-sizing

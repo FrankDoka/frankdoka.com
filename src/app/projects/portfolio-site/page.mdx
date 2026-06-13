@@ -1,0 +1,94 @@
+import image from './portfolio-site.svg'
+
+export const project = {
+  order: 0,
+  title: 'Portfolio Site Modernization',
+  description:
+    'Rebuilt my portfolio from a static AWS-hosted resume into a modern Next.js 15 site with Tailwind CSS v4, MDX content pipeline, Pagefind search, dark/light theme, PWA support, and Cloudflare Pages deployment.',
+  abstract: (
+    <p>
+      Migrated from a basic cloud resume challenge site on AWS S3/CloudFront to a full-featured developer portfolio
+      built on Next.js 15, Tailwind CSS v4, and a custom MDX pipeline — with static search, auto-generated table of contents,
+      dynamic OG images, dark/light theme toggle, copy-to-clipboard code blocks, PWA offline support, RSS feed, and Cloudflare Pages deployment.
+    </p>
+  ),
+  startDate: '2025-01-01',
+  date: '2026-06-13',
+  image: image,
+  href: '/projects/portfolio-site',
+  repo: 'https://github.com/FrankDoka',
+  status: 'Active',
+  type: 'Web / Portfolio',
+  tags: ['Next.js', 'Tailwind CSS', 'MDX', 'TypeScript', 'Cloudflare Pages', 'Pagefind', 'Zod']
+}
+
+export const metadata = {
+  title: project.title,
+  description: project.description
+}
+
+## Overview
+
+The original [Cloud Resume Challenge](/projects/cloud-resume-challenge) site was a static HTML resume on S3 and CloudFront. It demonstrated serverless architecture, but it was a single page — no room for project write-ups, build logs, or anything beyond a resume. This project replaced it with a production portfolio built for long-term use, then modernized it with search, validation, and developer experience features.
+
+## Architecture
+
+The site runs on four layers:
+
+**Content pipeline** — Blog posts and project pages are authored in MDX. At build time, Zod schemas validate every metadata export (titles, dates, tags, status fields), catching errors before they reach production. A remark/rehype plugin chain then transforms the content: GitHub Flavored Markdown, automatic layout wrapping, heading ID generation via `rehypeSlug`, Shiki syntax highlighting, and image unwrapping. A loader function discovers all MDX files with `fast-glob`, validates metadata, and sorts entries by date.
+
+**Application layer** — Next.js 15 with the App Router handles routing, static generation, and React Server Components. Tailwind CSS v4 provides utility-first styling through CSS-native configuration. Framer Motion adds scroll-triggered animations, and the View Transitions API provides smooth page-to-page transitions natively in the browser. The entire site is TypeScript with Zod runtime validation.
+
+**Features layer** — Pagefind provides static full-text search with a keyboard-accessible dialog (Ctrl/Cmd+K). Blog posts get auto-generated table of contents from headings, reading time estimates, and dynamic Open Graph images for social sharing. An RSS 2.0 feed serves blog content to feed readers. Cloudflare Web Analytics tracks usage without cookies.
+
+**Deployment** — GitHub pushes trigger Cloudflare Pages builds. The site pre-renders 60+ static HTML pages, Pagefind indexes them for search, and everything deploys to Cloudflare's edge network.
+
+## What I Built
+
+- **Homepage** with hero banner, about section, latest blog posts, and featured project cards
+- **Project pages** with architecture diagrams, technical breakdowns, and linked build log series
+- **Blog system** with MDX, syntax highlighting, reading time, table of contents, and tag-based filtering
+- **Static search** — Pagefind indexes all pages at build time with `data-pagefind-body` scoping, modal search dialog, keyboard shortcut, and inline search on the 404 page for dead link recovery
+- **Dark/light theme** — Toggle with localStorage persistence and system preference detection, no flash of wrong theme
+- **RSS feed** — Full blog content (not just descriptions) served at `/feed.xml` via `content:encoded` for feed readers
+- **Dynamic OG images** — Auto-generated social preview images per blog post and project using `next/og`
+- **Copy-to-clipboard** — One-click code copying on every code block across the site
+- **MDX callout components** — Reusable info, warning, danger, and tip boxes for rich blog content
+- **PWA support** — Service worker for offline access, installable as a homescreen app
+- **Experience section** with structured job data, detail pages, and skill grids
+- **About page** with certifications, education, and professional values
+- **Toolbox page** showcasing tools and technologies
+- **Full SEO** — JSON-LD structured data, dynamic sitemap, Open Graph images, web app manifest
+- **Security headers** — Content Security Policy, X-Frame-Options, Referrer-Policy, Permissions-Policy
+- **Accessibility** — Skip-to-main link, focus-visible outlines, semantic HTML landmarks, external link handling
+- **Schema validation** — Zod validates all MDX metadata at build time, catching missing or malformed fields early
+- **Image optimization** — Blur placeholders on raster images, AVIF/WebP format negotiation, responsive `sizes`
+- **Bundle analysis** — `@next/bundle-analyzer` for monitoring JS bundle size
+- **Performance hints** — DNS prefetch and preconnect for third-party scripts
+- **E2E testing** — 55 Playwright tests covering navigation, search, theme toggle, responsive layout, and link integrity
+- **Lighthouse CI** — Automated performance, accessibility, SEO, and best-practices audits on every pull request
+
+## Key Decisions
+
+| Decision | Choice | Why |
+|----------|--------|-----|
+| Framework | Next.js 15 | Static generation + React components + mature MDX support |
+| Styling | Tailwind v4 | CSS-first config, no JS config file, `@theme` design tokens |
+| Content | MDX in repo | Version-controlled, no external CMS, JSX when needed |
+| Validation | Zod | Runtime type checking catches metadata errors at build time |
+| Search | Pagefind | Static index, no server needed, works offline, tiny bundle |
+| Transitions | View Transitions API | Native browser API, no JS framework weight, respects `prefers-reduced-motion` |
+| Hosting | Cloudflare Pages | Free, fast builds, DNS already there, simpler than S3+CloudFront |
+| Analytics | Cloudflare Web Analytics | Privacy-first, no cookies, free, minimal script |
+| Theming | CSS variables + JS | Dynamic dark/light toggle, no flash, system preference aware |
+| Offline | Service worker PWA | Cache-first for assets, network-first for navigation |
+| Security | CSP + security headers | XSS protection, clickjacking prevention, strict referrer policy |
+| Animations | Framer Motion | Declarative API, `useInView` scroll triggers, React-native |
+| E2E Testing | Playwright | Real browser testing, fast parallel execution, CI integration |
+| Quality CI | Lighthouse CI | Automated score gates for performance, a11y, SEO on every PR |
+
+## Read More
+
+- [Part 1: Planning & Stack Selection](/blog/portfolio-site-1) — Evaluating frameworks, choosing the stack, and structuring the project
+- [Part 2: Building the Core](/blog/portfolio-site-2) — Component library, MDX pipeline with Zod validation, homepage layout, and navigation
+- [Part 3: Features, Polish & Deployment](/blog/portfolio-site-3) — Search, table of contents, RSS, OG images, View Transitions, accessibility, SEO, and Cloudflare Pages setup

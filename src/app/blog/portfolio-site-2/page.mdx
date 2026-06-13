@@ -1,0 +1,198 @@
+import { BlogPost } from '@/lib/mdx.ts'
+import { faCode } from '@fortawesome/free-solid-svg-icons'
+
+export const post = {
+  ...BlogPost,
+  type: 'Article',
+  icon: faCode,
+  date: '2025-06-07',
+  title: 'Portfolio Site Rebuild — Part 2: Building the Core',
+  description:
+    'Setting up the Next.js project, building the component library, wiring up MDX with Zod validation, and designing the homepage layout.',
+  tags: ['Next.js', 'React', 'Tailwind CSS', 'MDX', 'Zod']
+}
+
+export const metadata = {
+  title: post.title,
+  description: post.description
+}
+
+# Portfolio Site Rebuild — Part 2: Building the Core
+
+With the [stack decided](/blog/portfolio-site-1), this phase covers the initial setup, component library, MDX pipeline with schema validation, and homepage layout.
+
+## Project Setup
+
+Scaffolded with `create-next-app` using the App Router and TypeScript, then installed core dependencies:
+
+```bash
+npx create-next-app@latest frankdoka.com --typescript --tailwind --app --src-dir
+npm install framer-motion @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons zod
+npm install -D @next/mdx remark-gfm rehype-shiki rehype-slug fast-glob
+```
+
+Tailwind v4 configuration goes directly in CSS — a single `@theme` block for design tokens, no JavaScript config file.
+
+## Component Library
+
+Built bottom-up: primitives first, then composed into page sections.
+
+### Layout Primitives
+
+**Container** — Centered max-width wrapper with responsive padding. Every section uses it:
+
+```tsx
+function Container({ children, className }) {
+  return (
+    <div className={clsx('mx-auto max-w-7xl px-6 lg:px-8', className)}>
+      {children}
+    </div>
+  )
+}
+```
+
+**Section** — Reusable block with an eyebrow label, title, and consistent vertical spacing. Handles the repeating pattern across homepage sections without duplicating markup.
+
+### Animation System
+
+**FadeIn** — Wraps any element with a scroll-triggered fade + slide-up using Framer Motion:
+
+```tsx
+function FadeIn({ children }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-10%' })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5 }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+```
+
+**FadeInStagger** — Wraps a group of `FadeIn` children with staggered delays so cards reveal sequentially instead of all at once.
+
+### Interactive Components
+
+**Button** — Polymorphic component that renders as `<a>` for links or `<button>` for actions. Rounded pill style with focus-visible outlines for keyboard accessibility.
+
+**TagList** — Horizontal list of small category tags. Used on project cards and blog metadata.
+
+## MDX Pipeline
+
+The content system needed to handle two content types — blog posts and projects — with different metadata shapes but a shared loading mechanism.
+
+### Schema Validation with Zod
+
+Every MDX file's metadata gets validated at build time using Zod schemas. This catches typos, missing fields, and wrong types before they hit production:
+
+```tsx
+const postSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD'),
+  type: z.enum(['Article', 'Tutorial', 'Announcement']),
+  icon: z.any(),
+  tags: z.array(z.string()).optional(),
+  author: z.object({ name: z.string(), image: z.any() }).optional(),
+})
+
+const projectSchema = z.object({
+  order: z.number().int().min(0),
+  title: z.string().min(1),
+  description: z.string().min(1),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  status: z.string().min(1),
+  type: z.string().min(1),
+  tags: z.array(z.string()).optional(),
+  // ... image, abstract, href, repo, website fields
+})
+```
+
+If a blog post has a malformed date like `2025/06/01` instead of `2025-06-01`, or a project is missing a required `status` field, the build fails with a clear error message pointing to the exact file and field. No more silent metadata bugs.
+
+### Metadata Exports
+
+Each MDX file exports a typed metadata object:
+
+```tsx
+// Blog post metadata
+export const post = {
+  ...BlogPost,        // Base author info
+  type: 'Article',
+  icon: faCloud,
+  date: '2025-06-01',
+  title: 'Post Title',
+  description: 'Description for cards and SEO.',
+  tags: ['Tag1', 'Tag2']
+}
+
+// Project metadata
+export const project = {
+  order: 1,
+  title: 'Project Title',
+  abstract: <p>Card description with JSX support.</p>,
+  image: image,
+  status: 'Completed',
+  tags: ['Tech1', 'Tech2']
+}
+```
+
+### Dynamic Loading
+
+A generic loader discovers all MDX files at build time using `fast-glob`, dynamically imports each one, validates the metadata export against its Zod schema, and returns a sorted array:
+
+```tsx
+async function loadEntries<T>(directory: string, metaName: string, schema: z.ZodType) {
+  const files = await glob('**/page.mdx', { cwd: `src/app/${directory}` })
+  return Promise.all(
+    files.map(async (filename) => {
+      const metadata = (await import(`../app/${directory}/${filename}`))[metaName]
+      const result = schema.safeParse(metadata)
+      if (!result.success) {
+        throw new Error(`Invalid metadata in ${directory}/${filename}: ${result.error.message}`)
+      }
+      return { ...metadata, href: `/${directory}/${filename.replace(/\/page\.mdx$/, '')}` }
+    })
+  )
+}
+```
+
+Adding a new post or project is just creating a directory with a `page.mdx` file — the loader picks it up automatically. If the metadata is wrong, Zod tells you exactly what to fix.
+
+### Plugin Configuration
+
+The remark/rehype chain is configured in `next.config.mjs`. Each plugin handles one concern:
+
+| Plugin | Purpose |
+|--------|---------|
+| `remarkGfm` | Tables, task lists, autolinks |
+| `remarkMDXLayout` | Automatic page layout wrapping |
+| `rehypeSlug` | Generates heading IDs for anchor links |
+| `rehypeShiki` | Syntax highlighting with `github-dark` theme |
+| `rehypeUnwrapImages` | Full-width image figures |
+
+The `rehypeSlug` plugin is especially important — it generates stable `id` attributes on every heading, which powers both anchor links and the auto-generated table of contents component.
+
+## Homepage Layout
+
+Four sections stacked vertically, each wrapped in `FadeIn` for progressive reveal on scroll:
+
+1. **Hero Banner** — Name, title, one-line bio, call-to-action button
+2. **About Me** — Short bio, portrait photo, skills grid, experience cards, links to the full `/about` page
+3. **Build Logs** — Latest 3 blog posts in a compact card layout with FontAwesome icons
+4. **Projects** — Top 2 projects in a two-column card grid with images, tags, and "View project" buttons. A "See all projects" link goes to the full listing
+
+### Navigation
+
+The nav uses a slide-out panel with four large links — About, Projects, Blog, Toolbox. A "Doka." wordmark at the bottom links home. The large tap targets work well on mobile without needing a separate mobile navigation design. A search button in the header opens the Pagefind search dialog with Ctrl/Cmd+K keyboard shortcut support.
+
+## Next Up
+
+The core is running. [Part 3](/blog/portfolio-site-3) covers the features layer — search, table of contents, RSS, dynamic OG images, View Transitions — plus accessibility, SEO, and deploying to Cloudflare Pages.

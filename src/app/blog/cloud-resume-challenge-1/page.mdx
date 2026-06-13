@@ -1,0 +1,38 @@
+import { BlogPost } from '@/lib/mdx.ts'
+import { faCloud } from '@fortawesome/free-solid-svg-icons'
+
+export const post = {
+  ...BlogPost,
+  type: 'Article',
+  icon: faCloud,
+  date: '2023-06-01',
+  title: 'Cloud Resume Challenge — Phase 1: AWS Accounts & Organization',
+  description:
+    'Setting up a multi-account AWS Organization with org-formation, SSO, billing alerts, and a dedicated dev environment.',
+  tags: ['AWS', 'Cloud']
+}
+
+export const metadata = {
+  title: post.title,
+  description: post.description
+}
+
+# Cloud Resume Challenge — Phase 1: AWS Accounts & Organization
+
+Before writing any application code, I stood up a proper AWS account structure — the kind you'd want in a real organization, not just a single root account with everything in it.
+
+## What I Set Up
+
+- **Management Account** — Central hub for billing, organization policies, and account governance.
+- **AWS Organization via org-formation** — Automated the multi-account structure, OU hierarchy, and SCPs. org-formation extends what Control Tower does, with more flexibility and version-controlled config.
+- **Development Account** — Isolated sandbox for testing changes before promoting to production. Clean separation from the start.
+- **AWS SSO (IAM Identity Center)** — Single set of credentials to access both accounts with role-based federation. No more juggling access keys per account.
+- **Billing alerts** — CloudWatch alarms on spend thresholds so nothing runs up costs silently.
+
+## Version Control
+
+I set up CodeCommit and CodePipeline initially for the org-formation workflow, then moved to GitHub and GitHub Actions for the application code in later phases.
+
+## Why This Matters
+
+Most tutorial projects skip account structure entirely. Starting with proper multi-account governance, SSO, and billing controls meant every subsequent phase deployed into a production-like environment — not a single flat account where dev and prod resources sit side by side.

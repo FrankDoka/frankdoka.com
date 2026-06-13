@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+@import './global.css' layer(components);
+@import './typography.css' layer(components);
+
+/* Theme variables — dark by default, light override via data attribute */
+:root {
+  --theme-bg-page: #0a0a0a;
+  --theme-bg-surface: #171717;
+  --theme-bg-elevated: #262626;
+  --theme-bg-hover: rgba(255, 255, 255, 0.1);
+  --theme-text-primary: #ffffff;
+  --theme-text-secondary: #a3a3a3;
+  --theme-text-muted: #737373;
+  --theme-border: #404040;
+  --theme-border-subtle: #262626;
+  --theme-code-bg: #0a0a0a;
+  --theme-card-bg: #171717;
+  --theme-card-border: #262626;
+  --theme-card-hover: #262626;
+}
+
+:root[data-theme="light"] {
+  --theme-bg-page: #f8f8f8;
+  --theme-bg-surface: #efefef;
+  --theme-bg-elevated: #eaeaea;
+  --theme-bg-hover: rgba(0, 0, 0, 0.05);
+  --theme-text-primary: #1a1a1a;
+  --theme-text-secondary: #4a4a4a;
+  --theme-text-muted: #6b6b6b;
+  --theme-border: #d4d4d4;
+  --theme-border-subtle: #e5e5e5;
+  --theme-code-bg: #1e1e1e;
+  --theme-card-bg: #ffffff;
+  --theme-card-border: #e0e0e0;
+  --theme-card-hover: #f0f0f0;
+}
+
+body {
+  transition: background-color 200ms, color 200ms;
+}
+
+[data-theme-surface],
+[data-theme-page],
+[data-theme-elevated] {
+  transition: background-color 200ms;
+}
+
+.theme-card {
+  background-color: var(--theme-card-bg);
+  border-color: var(--theme-card-border);
+  transition: background-color 200ms, border-color 200ms;
+}
+
+.theme-card:hover {
+  background-color: var(--theme-card-hover);
+  border-color: var(--theme-border);
+}
+
+@theme {
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.75rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 2rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2.25rem;
+  --text-3xl: 1.75rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl: 2rem;
+  --text-4xl--line-height: 2.5rem;
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 3rem;
+  --text-6xl: 3rem;
+  --text-6xl--line-height: 3.5rem;
+  --text-7xl: 4rem;
+  --text-7xl--line-height: 4.5rem;
+
+  --radius-4xl: 2.5rem;
+
+  --font-sans: Mona Sans, ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --font-display: Mona Sans, ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --font-display--font-variation-settings: 'wdth' 125;
+
+  --font-display-length: 2;
+}

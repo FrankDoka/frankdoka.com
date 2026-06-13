@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0f1e"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#16a34a"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="500" fill="url(#bg)"/>
+
+  <!-- Dot grid -->
+  <pattern id="dots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="1.5" cy="1.5" r="1" fill="#ffffff" opacity="0.04"/>
+  </pattern>
+  <rect width="900" height="500" fill="url(#dots)"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="900" height="3" fill="url(#green)"/>
+
+  <!-- Header -->
+  <text x="48" y="52" font-family="ui-monospace, monospace" font-size="11" fill="#16a34a" letter-spacing="3" opacity="0.9">CI/CD DOCKER PIPELINE</text>
+  <text x="48" y="80" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#f1f5f9" letter-spacing="-0.5">Automated NGINX Deployment on AWS EC2</text>
+
+  <!-- Row labels -->
+  <text x="48" y="171" font-family="Arial, sans-serif" font-size="9" fill="#64748b" text-anchor="middle" transform="rotate(-90,48,166)">SOURCE</text>
+  <text x="48" y="275" font-family="Arial, sans-serif" font-size="9" fill="#64748b" text-anchor="middle" transform="rotate(-90,48,270)">BUILD</text>
+  <text x="48" y="379" font-family="Arial, sans-serif" font-size="9" fill="#64748b" text-anchor="middle" transform="rotate(-90,48,374)">DEPLOY</text>
+
+  <!-- === ROW 1: Source === -->
+  <!-- GitHub -->
+  <rect x="70" y="140" width="100" height="52" rx="8" fill="#1e293b" stroke="#16a34a" stroke-width="1.5" opacity="0.85"/>
+  <text x="120" y="161" font-family="Arial, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">SOURCE</text>
+  <text x="120" y="179" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0" text-anchor="middle">GitHub</text>
+
+  <!-- Arrow -->
+  <line x1="172" y1="166" x2="206" y2="166" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- GitHub Actions -->
+  <rect x="208" y="140" width="108" height="52" rx="8" fill="#1e293b" stroke="#16a34a" stroke-width="2"/>
+  <text x="262" y="161" font-family="Arial, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">CI/CD</text>
+  <text x="262" y="179" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">GH Actions</text>
+
+  <!-- Arrow -->
+  <line x1="318" y1="166" x2="352" y2="166" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Terraform -->
+  <rect x="354" y="140" width="100" height="52" rx="8" fill="#1e293b" stroke="#16a34a" stroke-width="1.5" opacity="0.85"/>
+  <text x="404" y="161" font-family="Arial, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">IaC</text>
+  <text x="404" y="179" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0" text-anchor="middle">Terraform</text>
+
+  <!-- Arrow Terraform → EC2 -->
+  <line x1="456" y1="166" x2="490" y2="166" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- AWS EC2 -->
+  <rect x="492" y="140" width="100" height="52" rx="8" fill="#1e293b" stroke="#16a34a" stroke-width="2"/>
+  <text x="542" y="161" font-family="Arial, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">CLOUD</text>
+  <text x="542" y="179" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">AWS EC2</text>
+
+  <!-- === ROW 2: Build === -->
+  <!-- Jenkins -->
+  <rect x="208" y="244" width="108" height="52" rx="8" fill="#1e293b" stroke="#16a34a" stroke-width="2"/>
+  <text x="262" y="265" font-family="Arial, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">AUTOMATION</text>
+  <text x="262" y="283" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Jenkins</text>
+
+  <!-- Arrow GH Actions down to Jenkins -->
+  <line x1="262" y1="194" x2="262" y2="244" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Arrow Jenkins → Docker Build -->
+  <line x1="318" y1="270" x2="352" y2="270" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Docker Build -->
+  <rect x="354" y="244" width="100" height="52" rx="8" fill="#1e293b" stroke="#16a34a" stroke-width="1.5" opacity="0.85"/>
+  <text x="404" y="265" font-family="Arial, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">CONTAINER</text>
+  <text x="404" y="283" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0" text-anchor="middle">Docker</text>
+
+  <!-- Arrow Docker → Test -->
+  <line x1="456" y1="270" x2="490" y2="270" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Test -->
+  <rect x="492" y="244" width="100" height="52" rx="8" fill="#1e293b" stroke="#16a34a" stroke-width="1.5" opacity="0.85"/>
+  <text x="542" y="265" font-family="Arial, sans-serif" font-size="10" fill="#4ade80" text-anchor="middle">VALIDATE</text>
+  <text x="542" y="283" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0" text-anchor="middle">Tests</text>
+
+  <!-- === ROW 3: Deploy === -->
+  <!-- Ansible -->
+  <rect x="208" y="348" width="108" height="52" rx="8" fill="#1e293b" stroke="#15803d" stroke-width="1.5"/>
+  <text x="262" y="369" font-family="Arial, sans-serif" font-size="10" fill="#86efac" text-anchor="middle">CONFIG MGMT</text>
+  <text x="262" y="387" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0" text-anchor="middle">Ansible</text>
+
+  <!-- Arrow Docker down to Ansible -->
+  <line x1="404" y1="298" x2="404" y2="334" stroke="#475569" stroke-width="1.5"/>
+  <line x1="404" y1="334" x2="316" y2="334" stroke="#475569" stroke-width="1.5"/>
+  <line x1="316" y1="334" x2="316" y2="348" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Arrow Ansible → NGINX -->
+  <line x1="318" y1="374" x2="352" y2="374" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- NGINX -->
+  <rect x="354" y="348" width="100" height="52" rx="8" fill="#1e293b" stroke="#15803d" stroke-width="2"/>
+  <text x="404" y="369" font-family="Arial, sans-serif" font-size="10" fill="#86efac" text-anchor="middle">WEB SERVER</text>
+  <text x="404" y="387" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">NGINX</text>
+
+  <!-- Arrow NGINX → OpenSSL -->
+  <line x1="456" y1="374" x2="490" y2="374" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- OpenSSL / TLS -->
+  <rect x="492" y="348" width="100" height="52" rx="8" fill="#1e293b" stroke="#15803d" stroke-width="1.5"/>
+  <text x="542" y="369" font-family="Arial, sans-serif" font-size="10" fill="#86efac" text-anchor="middle">TLS / HTTPS</text>
+  <text x="542" y="387" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0" text-anchor="middle">OpenSSL</text>
+
+  <!-- EC2 to NGINX deploy arrow -->
+  <line x1="542" y1="194" x2="542" y2="230" stroke="#475569" stroke-width="1.5"/>
+  <line x1="542" y1="230" x2="620" y2="230" stroke="#475569" stroke-width="1.5"/>
+  <line x1="620" y1="230" x2="620" y2="374" stroke="#475569" stroke-width="1.5"/>
+  <line x1="620" y1="374" x2="596" y2="374" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Right-side tech stack -->
+  <rect x="660" y="140" width="200" height="260" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+  <text x="760" y="165" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#94a3b8" text-anchor="middle" letter-spacing="1">TECH STACK</text>
+  <line x1="680" y1="174" x2="840" y2="174" stroke="#1e293b" stroke-width="1"/>
+  <text x="680" y="197" font-family="Arial, sans-serif" font-size="12" fill="#e2e8f0">🐙  GitHub + GH Actions</text>
+  <text x="680" y="222" font-family="Arial, sans-serif" font-size="12" fill="#e2e8f0">⚙  Terraform IaC</text>
+  <text x="680" y="247" font-family="Arial, sans-serif" font-size="12" fill="#e2e8f0">🔧  Jenkins Pipeline</text>
+  <text x="680" y="272" font-family="Arial, sans-serif" font-size="12" fill="#e2e8f0">🐳  Docker Containers</text>
+  <text x="680" y="297" font-family="Arial, sans-serif" font-size="12" fill="#e2e8f0">📋  Ansible Playbooks</text>
+  <text x="680" y="322" font-family="Arial, sans-serif" font-size="12" fill="#e2e8f0">🌐  NGINX Web Server</text>
+  <text x="680" y="347" font-family="Arial, sans-serif" font-size="12" fill="#e2e8f0">☁  AWS EC2</text>
+  <text x="680" y="372" font-family="Arial, sans-serif" font-size="12" fill="#e2e8f0">🔒  OpenSSL / TLS</text>
+
+  <!-- Footer -->
+  <text x="48" y="472" font-family="ui-monospace, monospace" font-size="10" fill="#334155">frankdoka.com/projects/ci-cd-docker-pipeline</text>
+</svg>
