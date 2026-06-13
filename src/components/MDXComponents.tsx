@@ -4,7 +4,7 @@ import Image, { type ImageProps } from 'next/image'
 import { Border } from '@/components/Border'
 import { Callout } from '@/components/Callout'
 import { CodeBlock } from '@/components/CodeBlock'
-import { GrayscaleTransitionImage } from '@/components/GrayscaleTransitionImage'
+import { ContentImage } from '@/components/ContentImage'
 import { TagList, TagListItem } from '@/components/TagList'
 
 export const MDXComponents = {
@@ -24,10 +24,10 @@ export const MDXComponents = {
       </figure>
     )
   },
-  img: function Img({ className, ...props }: React.ComponentPropsWithoutRef<typeof GrayscaleTransitionImage>) {
+  img: function Img({ className, ...props }: React.ComponentPropsWithoutRef<typeof ContentImage>) {
     return (
       <div className={clsx('group isolate my-10 overflow-hidden rounded-4xl bg-[var(--theme-bg-elevated)] max-sm:-mx-6', className)}>
-        <GrayscaleTransitionImage
+        <ContentImage
           {...props}
           sizes="(min-width: 768px) 42rem, 100vw"
           className="aspect-16/10 w-full object-cover"

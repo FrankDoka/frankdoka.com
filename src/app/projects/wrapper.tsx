@@ -1,7 +1,7 @@
 import { Border } from '@/components/Border'
 import { Button } from '@/components/Button'
 import { FadeIn, FadeInStagger } from '@/components/FadeIn'
-import { GrayscaleTransitionImage } from '@/components/GrayscaleTransitionImage'
+import { ContentImage } from '@/components/ContentImage'
 import { Container } from '@/components/layout/Container'
 import { MDXComponents } from '@/components/MDXComponents'
 import { PageIntro } from '@/components/PageIntro'
@@ -78,7 +78,7 @@ export default async function ProjectLayout({
             </div>
             <div className="border-y border-[var(--theme-border)] bg-[var(--theme-bg-elevated)]">
               <div className="mx-auto -my-px max-w-[76rem] bg-[var(--theme-border)]">
-                <GrayscaleTransitionImage
+                <ContentImage
                   src={project.image}
                   alt={`${project.title} architecture diagram`}
                   quality={90}

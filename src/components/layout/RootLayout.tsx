@@ -1,6 +1,5 @@
 'use client'
 
-import { motion, MotionConfig, useReducedMotion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { createContext, useEffect, useId, useRef, useState } from 'react'
 
@@ -45,16 +44,15 @@ function NavPanel({
   onClose: () => void
 }) {
   return (
-    <motion.div
-      layout
+    <div
       id={panelId}
-      style={{ height: expanded ? 'auto' : '0.5rem' }}
-      className="relative z-50 overflow-hidden pt-2"
+      style={{ gridTemplateRows: expanded ? '1fr' : '0fr' }}
+      className="relative z-50 grid pt-2 transition-[grid-template-rows] duration-300 ease-in-out motion-reduce:transition-none"
       data-theme-page
       aria-hidden={expanded ? undefined : 'true'}
       inert={!expanded}
     >
-      <motion.div layout data-theme-elevated>
+      <div className="overflow-hidden" data-theme-elevated>
         <div className="pt-14 pb-8" data-theme-page>
           <Header panelId={panelId} icon={XIcon} toggleRef={closeRef} expanded={expanded} onToggle={onClose} />
         </div>
@@ -66,8 +64,8 @@ function NavPanel({
             </div>
           </Container>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }
 
@@ -76,7 +74,6 @@ function RootLayoutInner({ children }: { children: React.ReactNode }) {
   const [expanded, setExpanded] = useState(false)
   const openRef = useRef<React.ComponentRef<'button'>>(null)
   const closeRef = useRef<React.ComponentRef<'button'>>(null)
-  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     function onClick(event: MouseEvent) {
@@ -94,7 +91,7 @@ function RootLayoutInner({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <MotionConfig transition={shouldReduceMotion ? { duration: 0 } : undefined}>
+    <>
       <header>
         <div
           className="absolute top-2 right-0 left-0 z-40 pt-14"
@@ -112,13 +109,12 @@ function RootLayoutInner({ children }: { children: React.ReactNode }) {
         />
       </header>
 
-      <motion.div
-        layout
+      <div
         style={{ borderTopLeftRadius: 40, borderTopRightRadius: 40 }}
         className="relative flex flex-auto overflow-hidden pt-14"
         data-theme-surface
       >
-        <motion.div layout className="relative isolate flex w-full flex-col pt-9">
+        <div className="relative isolate flex w-full flex-col pt-9">
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-4 focus:rounded-lg focus:bg-[var(--theme-text-primary)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--theme-bg-page)]"
@@ -132,9 +128,9 @@ function RootLayoutInner({ children }: { children: React.ReactNode }) {
           />
           <main id="main-content" className="w-full flex-auto">{children}</main>
           <Footer />
-        </motion.div>
-      </motion.div>
-    </MotionConfig>
+        </div>
+      </div>
+    </>
   )
 }
 

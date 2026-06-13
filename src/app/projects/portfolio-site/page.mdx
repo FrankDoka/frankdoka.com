@@ -37,7 +37,7 @@ The site runs on four layers:
 
 **Content pipeline** — Blog posts and project pages are authored in MDX. At build time, Zod schemas validate every metadata export (titles, dates, tags, status fields), catching errors before they reach production. A remark/rehype plugin chain then transforms the content: GitHub Flavored Markdown, automatic layout wrapping, heading ID generation via `rehypeSlug`, Shiki syntax highlighting, and image unwrapping. A loader function discovers all MDX files with `fast-glob`, validates metadata, and sorts entries by date.
 
-**Application layer** — Next.js 15 with the App Router handles routing, static generation, and React Server Components. Tailwind CSS v4 provides utility-first styling through CSS-native configuration. Framer Motion adds scroll-triggered animations, and the View Transitions API provides smooth page-to-page transitions natively in the browser. The entire site is TypeScript with Zod runtime validation.
+**Application layer** — Next.js 15 with the App Router handles routing, static generation, and React Server Components. Tailwind CSS v4 provides utility-first styling through CSS-native configuration. Scroll-triggered animations run on a small IntersectionObserver hook plus CSS (no animation library), and the View Transitions API provides smooth page-to-page transitions natively in the browser. The entire site is TypeScript with Zod runtime validation.
 
 **Features layer** — Pagefind provides static full-text search with a keyboard-accessible dialog (Ctrl/Cmd+K). Blog posts get auto-generated table of contents from headings, reading time estimates, and dynamic Open Graph images for social sharing. An RSS 2.0 feed serves blog content to feed readers. Cloudflare Web Analytics tracks usage without cookies.
 
@@ -82,7 +82,7 @@ The site runs on four layers:
 | Theming | CSS variables + JS | Dynamic dark/light toggle, no flash, system preference aware |
 | Offline | Service worker PWA | Cache-first for assets, network-first for navigation |
 | Security | CSP + security headers | XSS protection, clickjacking prevention, strict referrer policy |
-| Animations | Framer Motion | Declarative API, `useInView` scroll triggers, React-native |
+| Animations | IntersectionObserver + CSS | Scroll-reveal with zero animation-library weight |
 | Testing | Vitest | Fast unit + integration tests, jsdom, native ESM/TS support |
 
 ## Read More

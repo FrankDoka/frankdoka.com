@@ -4,7 +4,7 @@ Source for my personal portfolio at **[frankdoka.com](https://frankdoka.com/)**.
 
 ## Tech stack
 
-Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 · MDX · Framer Motion · Pagefind · Cloudflare Pages
+Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 · MDX · Pagefind · Cloudflare Pages
 
 ## Features
 
@@ -60,7 +60,7 @@ src/
   test/
     unit/            Component unit tests
     integration/     Page-level integration tests
-    __mocks__/       Test mocks (framer-motion, next/image, etc.)
+    __mocks__/       Test mocks (next/image, next/link, etc.)
 public/
   fonts/             Self-hosted Mona Sans variable font
   img/               Portrait photo, skill icons

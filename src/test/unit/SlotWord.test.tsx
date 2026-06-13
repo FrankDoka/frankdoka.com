@@ -1,8 +1,12 @@
 import { render, screen, act } from '@testing-library/react'
-import { useReducedMotion } from 'framer-motion'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { SlotWord } from '@/components/SlotWord'
+import { usePrefersReducedMotion } from '@/lib/usePrefersReducedMotion'
+
+vi.mock('@/lib/usePrefersReducedMotion', () => ({
+  usePrefersReducedMotion: vi.fn(() => false),
+}))
 
 const WORDS = ['Builder.', 'Hacker.', 'Maker.', 'Nerd.', 'Coder.']
 const FINAL = 'Software Engineer.'
@@ -10,7 +14,7 @@ const FINAL = 'Software Engineer.'
 describe('SlotWord', () => {
   beforeEach(() => {
     vi.useFakeTimers()
-    vi.mocked(useReducedMotion).mockReturnValue(false)
+    vi.mocked(usePrefersReducedMotion).mockReturnValue(false)
   })
 
   afterEach(() => {
@@ -44,13 +48,13 @@ describe('SlotWord', () => {
   })
 
   it('shows the final word immediately when reduced motion is preferred', () => {
-    vi.mocked(useReducedMotion).mockReturnValue(true)
+    vi.mocked(usePrefersReducedMotion).mockReturnValue(true)
     render(<SlotWord words={WORDS} final={FINAL} />)
     expect(screen.getAllByText(FINAL).length).toBeGreaterThanOrEqual(2)
   })
 
   it('does not animate any pool words when reduced motion is preferred', () => {
-    vi.mocked(useReducedMotion).mockReturnValue(true)
+    vi.mocked(usePrefersReducedMotion).mockReturnValue(true)
     render(<SlotWord words={WORDS} final={FINAL} startDelay={100} beat={100} />)
     act(() => {
       vi.advanceTimersByTime(1000)

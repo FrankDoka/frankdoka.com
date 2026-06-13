@@ -27,7 +27,7 @@ Scaffolded with `create-next-app` using the App Router and TypeScript, then inst
 
 ```bash
 npx create-next-app@latest frankdoka.com --typescript --tailwind --app --src-dir
-npm install framer-motion @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons zod
+npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons zod
 npm install -D @next/mdx remark-gfm rehype-shiki rehype-slug fast-glob
 ```
 
@@ -55,25 +55,29 @@ function Container({ children, className }) {
 
 ### Animation System
 
-**FadeIn** — Wraps any element with a scroll-triggered fade + slide-up using Framer Motion:
+**FadeIn** — Wraps any element with a scroll-triggered fade + slide-up using a small `IntersectionObserver` hook and a CSS transition — no animation library:
 
 ```tsx
 function FadeIn({ children }) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-10%' })
+  const [inView, setInView] = useState(false)
 
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5 }}
-    >
-      {children}
-    </motion.div>
-  )
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true)
+        observer.disconnect()
+      }
+    }, { rootMargin: '0px 0px -200px' })
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [])
+
+  return <div ref={ref} data-fade-in data-visible={inView || undefined}>{children}</div>
 }
 ```
+
+A few CSS rules do the rest — `[data-fade-in]` starts at `opacity: 0` and translated down, and `[data-visible]` transitions it into place. `prefers-reduced-motion` is honored in the same stylesheet.
 
 **FadeInStagger** — Wraps a group of `FadeIn` children with staggered delays so cards reveal sequentially instead of all at once.
 

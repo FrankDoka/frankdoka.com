@@ -389,7 +389,7 @@ Every push to `main` deploys to production. Pull requests get isolated preview U
 
 ## Testing
 
-A Vitest suite covers the things most likely to silently break: component rendering (unit tests with Testing Library) and page-level composition (integration tests). Static assets like `next/image`, `next/link`, and Framer Motion are mocked so tests stay fast and deterministic. A dedicated `mdx.test.ts` exercises the loader and Zod validation so a malformed metadata export fails the test run, not production. The GitHub Actions workflow runs the suite and a full production build on every pull request.
+A Vitest suite covers the things most likely to silently break: component rendering (unit tests with Testing Library) and page-level composition (integration tests). Static assets like `next/image`, `next/link`, and `next/navigation` are mocked so tests stay fast and deterministic. A dedicated `mdx.test.ts` exercises the loader and Zod validation so a malformed metadata export fails the test run, not production. The GitHub Actions workflow runs the suite and a full production build on every pull request.
 
 ## SEO: Tag Page Noindex
 

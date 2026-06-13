@@ -38,7 +38,6 @@ export default defineConfig({
       { find: 'next/image', replacement: path.join(mockDir, 'NextImage.tsx') },
       { find: 'next/link', replacement: path.join(mockDir, 'NextLink.tsx') },
       { find: 'next/navigation', replacement: path.join(mockDir, 'next-navigation.ts') },
-      { find: 'framer-motion', replacement: path.join(mockDir, 'framer-motion.tsx') },
       { find: '@fortawesome/react-fontawesome', replacement: path.join(mockDir, 'FontAwesome.tsx') },
     ],
   },

@@ -63,7 +63,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <link rel="preconnect" href="https://static.cloudflareinsights.com" crossOrigin="anonymous" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');var l=t==='light'||(!t&&window.matchMedia('(prefers-color-scheme:light)').matches);if(l){document.documentElement.setAttribute('data-theme','light');document.addEventListener('DOMContentLoaded',function(){document.body.style.backgroundColor='#f8f8f8';document.body.style.color='#1a1a1a'})}}catch(e){}})()`,
+            __html: `(function(){document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');var l=t==='light'||(!t&&window.matchMedia('(prefers-color-scheme:light)').matches);if(l){document.documentElement.setAttribute('data-theme','light');document.addEventListener('DOMContentLoaded',function(){document.body.style.backgroundColor='#f8f8f8';document.body.style.color='#1a1a1a'})}}catch(e){}})()`,
           }}
         />
       </head>

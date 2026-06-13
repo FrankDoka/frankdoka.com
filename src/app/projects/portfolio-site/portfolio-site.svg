@@ -82,10 +82,10 @@
 
   <line x1="294" y1="260" x2="320" y2="260" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
 
-  <!-- Framer Motion -->
+  <!-- Animation -->
   <rect x="322" y="236" width="116" height="48" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5"/>
   <text x="380" y="255" font-family="Arial, sans-serif" font-size="10" fill="#818cf8" text-anchor="middle">ANIMATION</text>
-  <text x="380" y="272" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0" text-anchor="middle">Framer Motion</text>
+  <text x="380" y="272" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#e2e8f0" text-anchor="middle">CSS + IO</text>
 
   <line x1="440" y1="260" x2="466" y2="260" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
 
@@ -175,7 +175,7 @@
   <text x="736" y="178" font-family="Arial, sans-serif" font-size="10.5" fill="#e2e8f0">Next.js 15 (App Router)</text>
   <text x="736" y="197" font-family="Arial, sans-serif" font-size="10.5" fill="#e2e8f0">Tailwind CSS v4</text>
   <text x="736" y="216" font-family="Arial, sans-serif" font-size="10.5" fill="#e2e8f0">MDX + Remark/Rehype</text>
-  <text x="736" y="235" font-family="Arial, sans-serif" font-size="10.5" fill="#e2e8f0">Framer Motion</text>
+  <text x="736" y="235" font-family="Arial, sans-serif" font-size="10.5" fill="#e2e8f0">CSS scroll-reveal</text>
   <text x="736" y="254" font-family="Arial, sans-serif" font-size="10.5" fill="#e2e8f0">TypeScript + Zod</text>
   <text x="736" y="273" font-family="Arial, sans-serif" font-size="10.5" fill="#e2e8f0">Cloudflare Pages</text>
   <text x="736" y="292" font-family="Arial, sans-serif" font-size="10.5" fill="#e2e8f0">GitHub Actions</text>

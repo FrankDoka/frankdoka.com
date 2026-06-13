@@ -37,3 +37,45 @@
     animation: none;
   }
 }
+
+/* Scroll-triggered fade-in (see FadeIn.tsx). Scoped under `.js` so content
+   stays visible if JavaScript is disabled or the observer never fires. */
+.js [data-fade-in] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.js [data-fade-in][data-visible='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-fade-in] {
+    transform: none;
+    transition-duration: 0.01ms;
+  }
+}
+
+/* Word rotator (SlotWord) — each new word slides up into view. */
+@keyframes slot-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Interactive grid ripple (GridPattern) — hovered cells pop in then fade out. */
+@keyframes grid-block-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

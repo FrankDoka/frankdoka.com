@@ -89,9 +89,9 @@ The old S3 + CloudFront + Route 53 stack worked but was heavy for a static site.
 - Preview deployments on every pull request
 - Built-in Web Analytics — privacy-first, no cookies, just a script tag
 
-## Animations: Framer Motion + View Transitions
+## Animations: CSS + View Transitions
 
-Framer Motion handles scroll-triggered fade-ins and staggered card reveals. The `useInView` hook makes it declarative — wrap a component, define the animation, done. No imperative scroll listeners or intersection observer boilerplate.
+Scroll-triggered fade-ins and staggered card reveals run on a small `IntersectionObserver` hook plus a CSS transition — no animation library, so nothing extra ships to the browser. A component fades and slides into place the first time it scrolls into view.
 
 For page-to-page navigation, the View Transitions API handles smooth crossfade transitions natively in the browser. Next.js 15 supports it as an experimental flag — one line in the config, a few CSS keyframes, and pages transition smoothly. It respects `prefers-reduced-motion` automatically.
 
