@@ -1,5 +1,5 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
-import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev'
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
 import createMDX from '@next/mdx'
 import rehypeShiki from '@shikijs/rehype'
 import { Parser } from 'acorn'
@@ -121,7 +121,7 @@ const withMDX = createMDX({
 
 async function buildConfig() {
   if (process.env.NODE_ENV === 'development') {
-    await setupDevPlatform()
+    await initOpenNextCloudflareForDev()
   }
 
   return withBundleAnalyzer(withMDX(nextConfig))

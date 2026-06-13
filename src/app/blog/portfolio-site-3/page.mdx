@@ -368,9 +368,9 @@ The entire site pre-renders at build time — 60+ static HTML pages deployed to 
 ### Setup Steps
 
 1. **Connect repo** — Linked the GitHub repository to a new Cloudflare Pages project
-2. **Build config** — Build command: `npx @cloudflare/next-on-pages`, output: `.vercel/output/static`
+2. **Build config** — Build command: `npm run build && npx opennextjs-cloudflare`, output: `.open-next/assets`
 3. **Custom domain** — DNS was already on Cloudflare, so adding `frankdoka.com` was a single click. SSL provisioned automatically
-4. **Environment** — Set `NODE_VERSION=20` and `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` in build settings
+4. **Environment** — Set `NODE_VERSION=22` and `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` in build settings
 
 ### CI/CD Flow
 
