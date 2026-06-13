@@ -65,8 +65,7 @@ The site runs on four layers:
 - **Image strategy** — Blur placeholders on raster images and responsive `sizes` (static export serves images as-is, so sources are pre-sized rather than transcoded at request time)
 - **Bundle analysis** — `@next/bundle-analyzer` for monitoring JS bundle size
 - **Performance hints** — DNS prefetch and preconnect for third-party scripts
-- **E2E testing** — 55 Playwright tests covering navigation, search, theme toggle, responsive layout, and link integrity
-- **Lighthouse CI** — Automated performance, accessibility, SEO, and best-practices audits on every pull request
+- **Testing** — Vitest unit and integration tests covering components, page composition, and the MDX loader with Zod validation, run in CI on every pull request
 
 ## Key Decisions
 
@@ -84,8 +83,7 @@ The site runs on four layers:
 | Offline | Service worker PWA | Cache-first for assets, network-first for navigation |
 | Security | CSP + security headers | XSS protection, clickjacking prevention, strict referrer policy |
 | Animations | Framer Motion | Declarative API, `useInView` scroll triggers, React-native |
-| E2E Testing | Playwright | Real browser testing, fast parallel execution, CI integration |
-| Quality CI | Lighthouse CI | Automated score gates for performance, a11y, SEO on every PR |
+| Testing | Vitest | Fast unit + integration tests, jsdom, native ESM/TS support |
 
 ## Read More
 

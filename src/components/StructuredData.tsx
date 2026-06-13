@@ -13,7 +13,7 @@ export function personSchema() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Frank Doka',
-    url: 'https://www.frankdoka.com',
+    url: 'https://frankdoka.com',
     jobTitle: 'Infrastructure Architect',
     sameAs: [
       'https://github.com/FrankDoka',
@@ -43,11 +43,11 @@ export function blogPostSchema(post: {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    url: `https://www.frankdoka.com${post.href}`,
+    url: `https://frankdoka.com${post.href}`,
     author: {
       '@type': 'Person',
       name: post.author.name,
-      url: 'https://www.frankdoka.com',
+      url: 'https://frankdoka.com',
     },
   }
 }
@@ -65,7 +65,7 @@ export function projectSchema(project: {
     name: project.title,
     description: project.description,
     dateCreated: project.date,
-    url: `https://www.frankdoka.com${project.href}`,
+    url: `https://frankdoka.com${project.href}`,
     author: {
       '@type': 'Person',
       name: 'Frank Doka',

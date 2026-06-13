@@ -8,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: 'Projects — Frank Doka',
     description: 'Cloud and DevOps projects — serverless AWS apps, Kubernetes deployments, and CI/CD pipelines.',
-    url: 'https://www.frankdoka.com/projects',
+    url: 'https://frankdoka.com/projects',
   },
 }
 

@@ -5,7 +5,7 @@ import { type Metadata } from 'next'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.frankdoka.com'),
+  metadataBase: new URL('https://frankdoka.com'),
   title: {
     template: '%s | Frank Doka',
     default: 'Frank Doka | Infrastructure Architect',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: 'Frank Doka',
     type: 'website',
-    url: 'https://www.frankdoka.com',
+    url: 'https://frankdoka.com',
   },
   twitter: {
     card: 'summary_large_image',

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Toolbox — Frank Doka',
     description: 'The cloud platforms, automation tools, and technologies I work with for infrastructure engineering and DevOps.',
-    url: 'https://www.frankdoka.com/toolbox',
+    url: 'https://frankdoka.com/toolbox',
   },
 }
 

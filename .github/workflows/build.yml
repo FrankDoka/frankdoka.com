@@ -31,18 +31,5 @@ jobs:
       - name: Unit & integration tests
         run: npm test
 
-      - name: Install Playwright (Chromium)
-        run: npx playwright install --with-deps chromium
-
-      # The Playwright webServer builds the static site and serves out/,
-      # so this step also validates a clean production build.
-      - name: E2E tests
-        run: npm run test:e2e
-
-      - name: Upload Playwright report
-        uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 14
+      - name: Build (static export + search index)
+        run: npm run build

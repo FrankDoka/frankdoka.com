@@ -146,7 +146,7 @@ export async function GET() {
         ${posts.map((post) => `
           <item>
             <title>${escapeXml(post.title)}</title>
-            <link>https://www.frankdoka.com${post.href}</link>
+            <link>https://frankdoka.com${post.href}</link>
             <pubDate>${new Date(post.date).toUTCString()}</pubDate>
             <description>${escapeXml(post.description)}</description>
           </item>
@@ -322,7 +322,7 @@ const personSchema = {
   '@type': 'Person',
   name: 'Frank Doka',
   jobTitle: 'Infrastructure Architect',
-  url: 'https://www.frankdoka.com',
+  url: 'https://frankdoka.com',
   sameAs: ['https://github.com/FrankDoka', 'https://linkedin.com/in/frankdoka']
 }
 ```
@@ -376,7 +376,7 @@ The entire site pre-renders at build time — 60+ static HTML pages deployed to 
 2. **Static export** — Set `output: 'export'` in `next.config.mjs`. The whole site is content-driven (MDX) and needs no server runtime, so it builds to a folder of plain HTML/CSS/JS that Pages serves directly — no adapter, no Functions, nothing to break at runtime
 3. **Build config** — Build command: `npm run build`, output directory: `out` (set via `pages_build_output_dir` in `wrangler.jsonc`)
 4. **Custom domain** — DNS was already on Cloudflare, so adding `frankdoka.com` was a single click. SSL provisioned automatically
-5. **Environment** — Set `NODE_VERSION=22` and `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` in build settings
+5. **Environment** — Set `NODE_VERSION=24` and `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` in build settings
 
 ### CI/CD Flow
 
@@ -387,58 +387,9 @@ Pull request  → Preview deployment at unique URL → Verify before merge
 
 Every push to `main` deploys to production. Pull requests get isolated preview URLs for verification.
 
-## End-to-End Testing
+## Testing
 
-Unit tests verify component logic, but they can't catch broken navigation, missing content, or integration issues between the server and client. Playwright handles this — it launches a real Chromium browser against a production build and tests the site the way a user would actually use it.
-
-The test suite covers eight areas:
-
-```
-src/test/e2e/
-├── blog.spec.ts         # Blog listing, article links, post rendering
-├── home.spec.ts         # Hero banner, sections, document title
-├── links.spec.ts        # Social links, footer links, anchor targets
-├── navigation.spec.ts   # Header nav, hamburger menu, footer nav, 404
-├── projects.spec.ts     # Project listing, detail pages, status badges
-├── responsive.spec.ts   # Mobile/desktop viewport, overflow, footer
-├── search.spec.ts       # Search dialog, Ctrl+K shortcut, inline 404 search
-└── theme.spec.ts        # Toggle, persistence across nav, reload, label
-```
-
-The Playwright config runs against the real static build rather than the dev server — this catches issues that only surface with static generation, like missing data or hydration mismatches. Since a static export can't be served by `next start`, it builds the site and serves the `out/` directory with a plain static file server:
-
-```ts
-// playwright.config.ts
-webServer: {
-  command: 'npm run build && npx serve out -l 3000',
-  url: 'http://localhost:3000',
-  reuseExistingServer: !process.env.CI,
-  timeout: 120_000,
-}
-```
-
-The CI pipeline installs Chromium, runs all 55 E2E tests after the build step, and uploads the Playwright HTML report as an artifact for debugging failures.
-
-## Lighthouse CI
-
-A separate GitHub Actions workflow runs Lighthouse against the production build on every pull request. It audits four key pages (home, about, blog, projects) and fails the check if accessibility drops below 90:
-
-```json
-{
-  "ci": {
-    "assert": {
-      "assertions": {
-        "categories:performance": ["warn", { "minScore": 0.9 }],
-        "categories:accessibility": ["error", { "minScore": 0.9 }],
-        "categories:best-practices": ["warn", { "minScore": 0.9 }],
-        "categories:seo": ["warn", { "minScore": 0.9 }]
-      }
-    }
-  }
-}
-```
-
-Reports are uploaded to temporary public storage so you can see the full breakdown for each audit.
+A Vitest suite covers the things most likely to silently break: component rendering (unit tests with Testing Library) and page-level composition (integration tests). Static assets like `next/image`, `next/link`, and Framer Motion are mocked so tests stay fast and deterministic. A dedicated `mdx.test.ts` exercises the loader and Zod validation so a malformed metadata export fails the test run, not production. The GitHub Actions workflow runs the suite and a full production build on every pull request.
 
 ## SEO: Tag Page Noindex
 
@@ -471,8 +422,7 @@ export async function generateMetadata({ params }) {
 | Image loading | None | Blur placeholders + responsive sizes |
 | Bundle analysis | None | @next/bundle-analyzer |
 | 404 recovery | Dead end | Inline Pagefind search |
-| E2E testing | None | 55 Playwright tests across 8 suites |
-| Lighthouse CI | None | Automated audits on every PR |
+| Testing | None | Vitest unit + integration suite |
 | Add new content | Edit HTML | Drop in MDX file |
 
-The site is live at [frankdoka.com](https://www.frankdoka.com). Source is on [GitHub](https://github.com/FrankDoka).
+The site is live at [frankdoka.com](https://frankdoka.com). Source is on [GitHub](https://github.com/FrankDoka).

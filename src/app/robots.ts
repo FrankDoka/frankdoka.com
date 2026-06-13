@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://www.frankdoka.com/sitemap.xml',
+    sitemap: 'https://frankdoka.com/sitemap.xml',
   }
 }

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Games — Frank Doka',
     description: 'Multiplayer browser games and interactive experiments built for fun.',
-    url: 'https://www.frankdoka.com/games',
+    url: 'https://frankdoka.com/games',
   },
 }
 

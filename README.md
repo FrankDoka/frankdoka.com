@@ -1,6 +1,6 @@
 # frankdoka.com
 
-Source for my personal portfolio at **[frankdoka.com](https://www.frankdoka.com/)**.
+Source for my personal portfolio at **[frankdoka.com](https://frankdoka.com/)**.
 
 ## Tech stack
 
@@ -33,14 +33,13 @@ npm run dev          # http://localhost:3000
 
 ```bash
 npm test             # Unit and integration tests (Vitest)
-npm run test:e2e     # End-to-end tests (Playwright)
-npm run test:e2e:ui  # Playwright UI mode
+npm run test:coverage  # With coverage report
 ```
 
 ## Build
 
 ```bash
-npm run build        # Next.js build + Pagefind index
+npm run build        # Static export (out/) + Pagefind index
 ```
 
 ## Project structure
@@ -61,7 +60,6 @@ src/
   test/
     unit/            Component unit tests
     integration/     Page-level integration tests
-    e2e/             Playwright end-to-end tests
     __mocks__/       Test mocks (framer-motion, next/image, etc.)
 public/
   fonts/             Self-hosted Mona Sans variable font
@@ -75,8 +73,7 @@ Cloudflare Pages auto-deploys on push to `main`. Pull requests get preview URLs.
 
 ## CI
 
-- **Build workflow** — Runs unit tests, builds, runs E2E tests on every PR
-- **Lighthouse CI** — Audits performance, accessibility, SEO on every PR
+- **Build workflow** — Runs unit + integration tests and a production build on every PR
 
 ## License
 

@@ -6,7 +6,7 @@ export const post = {
   type: 'Article',
   icon: faStore,
   date: '2024-01-15',
-  title: 'Azure Web Store on Kubernetes — Part 1: Environment Setup & Docker Images',
+  title: 'Azure Web Store on Kubernetes — Environment Setup & Docker Images',
   description:
     'Setting up the Azure environment, building and testing Docker images for all microservices locally, and preparing for AKS deployment.',
   tags: ['Azure', 'Kubernetes', 'Docker']
@@ -17,9 +17,9 @@ export const metadata = {
   description: post.description
 }
 
-# Azure Web Store on Kubernetes — Part 1: Environment Setup & Docker Images
+# Azure Web Store on Kubernetes — Environment Setup & Docker Images
 
-Part 1 covers the foundation: setting up Azure resources and building Docker images for all four microservices before deploying to Kubernetes.
+This build log covers the foundation: setting up Azure resources and building Docker images for all four microservices before deploying to Kubernetes.
 
 ## Azure Resources
 
@@ -47,6 +47,6 @@ docker run --rm --net webappbridge --name webappservice \
 
 Each service runs on its own port, communicates over the Docker bridge network, and responds correctly to API calls — confirmed with local testing before touching Azure.
 
-## What's Next
+## The Full Picture
 
-Part 2 pushes images to Azure Container Registry, configures continuous deployment from ACR to App Service, and sets up the GitHub Actions CI/CD pipeline.
+From here the images get pushed to Azure Container Registry and deployed to AKS through a GitHub Actions pipeline, with Azure B2C handling customer identity and API Management fronting the services. The [project overview](/projects/azure-kubernetes-store) walks through the complete architecture end to end.
