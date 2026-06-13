@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && npx pagefind --site .next/server/app --output-path public/pagefind",
-    "build:cf": "npm run build && npx opennextjs-cloudflare build --skipNextBuild && cp .open-next/worker.js .open-next/assets/_worker.js",
+    "build:cf": "npm run build && npx opennextjs-cloudflare build --skipNextBuild && cp .open-next/worker.js .open-next/assets/_worker.js && cp -r .open-next/cloudflare .open-next/middleware .open-next/server-functions .open-next/.build .open-next/assets/",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
