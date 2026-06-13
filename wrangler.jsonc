@@ -1,9 +1,5 @@
 {
   "name": "frankdoka-com",
   "compatibility_date": "2025-06-03",
-  "compatibility_flags": ["nodejs_compat"],
-  "pages_build_output_dir": ".open-next/assets",
-  "observability": {
-    "enabled": true
-  }
+  "pages_build_output_dir": "out"
 }

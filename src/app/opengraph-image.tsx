@@ -1,5 +1,8 @@
 import { ImageResponse } from 'next/og'
 
+// Prerender at build time (required for `output: export`).
+export const dynamic = 'force-static'
+
 export const alt = 'Frank Doka — Infrastructure Architect'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'

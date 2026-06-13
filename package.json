@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npx pagefind --site .next/server/app --output-path public/pagefind",
-    "build:cf": "npm run build && npx opennextjs-cloudflare build --skipNextBuild && cp .open-next/worker.js .open-next/assets/_worker.js && cp -r .open-next/cloudflare .open-next/middleware .open-next/server-functions .open-next/.build .open-next/assets/",
+    "build": "next build && npx pagefind --site out",
+    "build:cf": "npm run build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
@@ -13,9 +13,8 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "cf:build": "npx opennextjs-cloudflare build",
-    "preview": "npm run cf:build && wrangler pages dev",
-    "deploy": "npm run cf:build && wrangler pages deploy",
+    "preview": "npm run build && npx wrangler pages dev out",
+    "deploy": "npm run build && npx wrangler pages deploy out",
     "upgrade": "npx npm-check-updates -u && npm install"
   },
   "engines": {
@@ -44,7 +43,6 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@next/bundle-analyzer": "^16.2.9",
-    "@opennextjs/cloudflare": "^1.19.11",
     "@playwright/test": "^1.60.0",
     "@shikijs/rehype": "^4.1.0",
     "@tailwindcss/postcss": "^4",
@@ -57,7 +55,6 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.2",
     "@vitest/coverage-v8": "^4.1.0",
-    "esbuild": "^0.28.1",
     "eslint": "^9",
     "eslint-config-next": "^15.3.3",
     "eslint-plugin-react-hooks": "^7.1.1",

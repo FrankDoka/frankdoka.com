@@ -5,6 +5,15 @@ export const alt = 'Project by Frank Doka'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
+// Prerender at build time (required for `output: export`).
+export const dynamic = 'force-static'
+
+// Prerender one OG image per project (required for `output: export`).
+export async function generateStaticParams() {
+  const projects = await loadProjects()
+  return projects.map((p) => ({ slug: p.href.replace('/projects/', '') }))
+}
+
 export default async function OGImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const projects = await loadProjects()

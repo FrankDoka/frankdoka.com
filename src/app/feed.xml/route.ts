@@ -2,6 +2,9 @@ import { loadPosts } from '@/lib/mdx'
 import fs from 'fs'
 import path from 'path'
 
+// Emit feed.xml as a static file at build time (required for `output: export`).
+export const dynamic = 'force-static'
+
 const SITE_URL = 'https://www.frankdoka.com'
 
 function escapeXml(str: string): string {

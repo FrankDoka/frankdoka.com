@@ -4,6 +4,9 @@ import { MetadataRoute } from 'next'
 import { loadPosts, loadProjects } from '@/lib/mdx'
 import { experience } from '@/data/experience'
 
+// Emit as a static file at build time (required for `output: export`).
+export const dynamic = 'force-static'
+
 const BASE_URL = 'https://www.frankdoka.com'
 
 function getFileMtime(filePath: string): Date {

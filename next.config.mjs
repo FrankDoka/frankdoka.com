@@ -1,5 +1,4 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
-import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
 import createMDX from '@next/mdx'
 import rehypeShiki from '@shikijs/rehype'
 import { Parser } from 'acorn'
@@ -15,42 +14,19 @@ import { unifiedConditional } from 'unified-conditional'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  // Static HTML export — the whole site is content-driven (MDX) and needs no
+  // server runtime. Cloudflare Pages serves the `out/` directory directly.
+  // Security headers live in `public/_headers` (the next.config `headers()`
+  // hook does not run for static exports).
+  output: 'export',
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   images: {
-    formats: ['image/avif', 'image/webp'],
+    // No Image Optimization server in a static export, so serve images as-is.
+    unoptimized: true,
   },
   experimental: {
     viewTransition: true,
     optimizePackageImports: ['@fortawesome/free-brands-svg-icons', '@fortawesome/free-solid-svg-icons'],
-  },
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
-              "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: https:",
-              "font-src 'self'",
-              "connect-src 'self' https://cloudflareinsights.com",
-              "frame-ancestors 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-            ].join('; '),
-          },
-        ],
-      },
-    ]
   },
 }
 
@@ -120,12 +96,4 @@ const withMDX = createMDX({
   }
 })
 
-async function buildConfig() {
-  if (process.env.NODE_ENV === 'development') {
-    await initOpenNextCloudflareForDev()
-  }
-
-  return withBundleAnalyzer(withMDX(nextConfig))
-}
-
-export default buildConfig()
+export default withBundleAnalyzer(withMDX(nextConfig))
