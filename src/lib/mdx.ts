@@ -74,7 +74,6 @@ interface MDX {
 
 export interface Post extends MDX {
   icon: IconProp | FontAwesomeIconProps['icon']
-  image: ImagePropsWithOptionalAlt
   type: 'Article' | 'Tutorial' | 'Announcement'
   author: {
     name: string

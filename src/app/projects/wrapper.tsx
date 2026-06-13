@@ -82,7 +82,7 @@ export default async function ProjectLayout({
                   src={project.image}
                   alt={`${project.title} architecture diagram`}
                   quality={90}
-                  className="max-h-[80vh] object-cover"
+                  className="w-full h-auto"
                   priority
                 />
               </div>

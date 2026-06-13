@@ -43,6 +43,8 @@ export function blogPostSchema(post: {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
+    dateModified: post.date,
+    image: `https://frankdoka.com${post.href}/opengraph-image`,
     url: `https://frankdoka.com${post.href}`,
     author: {
       '@type': 'Person',
@@ -65,6 +67,7 @@ export function projectSchema(project: {
     name: project.title,
     description: project.description,
     dateCreated: project.date,
+    image: `https://frankdoka.com${project.href}/opengraph-image`,
     url: `https://frankdoka.com${project.href}`,
     author: {
       '@type': 'Person',

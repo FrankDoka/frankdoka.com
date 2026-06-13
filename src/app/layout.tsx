@@ -52,6 +52,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="h-full antialiased" data-theme="dark" suppressHydrationWarning>
       <head>
+        <link
+          rel="preload"
+          href="/fonts/Mona-Sans.var.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
         <link rel="preconnect" href="https://static.cloudflareinsights.com" crossOrigin="anonymous" />
         <script

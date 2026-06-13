@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { ArticleHero } from '@/components/ArticleHero'
 import { FadeIn } from '@/components/FadeIn'
 import { Container } from '@/components/layout/Container'
 import { MDXComponents } from '@/components/MDXComponents'
@@ -63,11 +64,14 @@ export default async function BlogArticleWrapper({
                 ))}
               </div>
             )}
+            <div className="mx-auto w-full max-w-3xl">
+              <ArticleHero icon={post.icon} eyebrow={post.type} />
+            </div>
           </header>
         </FadeIn>
 
         <FadeIn>
-          <div className="relative mt-24 sm:mt-32 lg:mt-40">
+          <div className="relative mt-16 sm:mt-20 lg:mt-24">
             <div className="absolute -right-64 top-0 hidden w-56 xl:block">
               <TableOfContents />
             </div>
