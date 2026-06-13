@@ -50,14 +50,25 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme)
+  // Start from the server default ('dark') so the first client render matches
+  // the SSR HTML — avoids a hydration mismatch. The real theme is already
+  // applied to the DOM pre-paint by the inline script in layout.tsx; we
+  // reconcile React state to it on mount below.
+  const [theme, setTheme] = useState<Theme>('dark')
   const initialized = useRef(false)
 
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true
-      applyTheme(theme)
-      return
+      // Always apply on mount so body/container inline styles are set, then
+      // reconcile React state to the real theme (fixes the toggle icon for
+      // light visitors without a hydration mismatch on first render). The
+      // state sync is deferred a frame to avoid a synchronous setState here.
+      const actual = getInitialTheme()
+      applyTheme(actual)
+      if (actual === theme) return
+      const raf = requestAnimationFrame(() => setTheme(actual))
+      return () => cancelAnimationFrame(raf)
     }
     applyTheme(theme)
     localStorage.setItem('theme', theme)

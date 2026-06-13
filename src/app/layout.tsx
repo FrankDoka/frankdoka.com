@@ -67,7 +67,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
       </head>
-      <body className="flex min-h-full flex-col text-base">
+      <body className="flex min-h-full flex-col text-base" suppressHydrationWarning>
         <ThemeProvider>
           <RootLayout>{children}</RootLayout>
         </ThemeProvider>
