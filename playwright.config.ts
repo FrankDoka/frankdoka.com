@@ -15,7 +15,9 @@ export default defineConfig({
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
   ],
   webServer: {
-    command: 'npm run build && npm start',
+    // `next start` is unsupported with `output: export`; serve the static
+    // `out/` directory the build produces instead.
+    command: 'npm run build && npx serve out -l 3000',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

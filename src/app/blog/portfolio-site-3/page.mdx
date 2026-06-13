@@ -28,8 +28,10 @@ Static sites don't have a search backend, but Pagefind solves this cleanly. It r
 The build script chains it after `next build`:
 
 ```bash
-next build && npx pagefind --site .next/server/app --output-path public/pagefind
+next build && npx pagefind --site out
 ```
+
+Since the site is a static export, `next build` writes the finished HTML to `out/`, and Pagefind indexes that directory directly — the search index lands in `out/pagefind/` and ships alongside the rest of the static assets.
 
 On the frontend, a search dialog opens with Ctrl/Cmd+K (or clicking the search button in the header). It loads the Pagefind library lazily on first open, debounces input at 200ms, and renders results with titles, excerpts, and links:
 
@@ -130,9 +132,11 @@ Blog posts get a teal "Build Log" label with tag pills. Projects get an orange "
 
 ## RSS Feed
 
-An RSS 2.0 feed at `/feed.xml` serves all blog posts to feed readers. It's a Next.js route handler that builds the XML at request time:
+An RSS 2.0 feed at `/feed.xml` serves all blog posts to feed readers. It's a Next.js route handler marked `force-static`, so it's rendered once at build time and emitted as a plain file in the static export:
 
 ```tsx
+export const dynamic = 'force-static'
+
 export async function GET() {
   const posts = (await loadPosts()).sort(/* by date descending */)
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -253,18 +257,19 @@ The web app manifest enables "Add to Home Screen" on mobile devices with standal
 
 ## Security Headers
 
-Content Security Policy and other security headers are set via `next.config.mjs`:
+A static export has no Node server to attach response headers, and Next's `headers()` config only applies when a server is in front of the app. On Cloudflare Pages the answer is a `_headers` file in `public/` (which gets copied into the build output), where each rule is a path pattern followed by indented header lines:
 
-```js
-headers: [
-  { key: 'Content-Security-Policy', value: "default-src 'self'; script-src 'self' 'unsafe-inline' ..." },
-  { key: 'X-Frame-Options', value: 'DENY' },
-  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-]
+```
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' ...
 ```
 
-These prevent XSS, clickjacking, and unwanted API access without any external dependencies.
+Cloudflare applies these at the edge on every response. They prevent XSS, clickjacking, and unwanted API access without any external dependencies.
 
 ## Content Migration
 
@@ -359,7 +364,7 @@ The entire site pre-renders at build time — 60+ static HTML pages deployed to 
 ### Image Strategy
 
 - Project illustrations are SVGs — infinitely scalable, tiny file sizes
-- Portrait photo uses Next.js `<Image>` with responsive `sizes`, AVIF/WebP format conversion, and `placeholder="blur"` for instant low-res previews while the full image loads
+- Portrait photo uses Next.js `<Image>` with responsive `sizes` and `placeholder="blur"` for instant low-res previews while the full image loads. A static export has no image-optimization server, so `images.unoptimized` is set and the source images are pre-sized rather than transcoded on the fly
 - Below-the-fold images use `loading="lazy"`
 - `@next/bundle-analyzer` is available as a dev dependency — run `ANALYZE=true npm run build` to visualize the bundle and catch bloat early
 
@@ -368,9 +373,10 @@ The entire site pre-renders at build time — 60+ static HTML pages deployed to 
 ### Setup Steps
 
 1. **Connect repo** — Linked the GitHub repository to a new Cloudflare Pages project
-2. **Build config** — Build command: `npm run build && npx opennextjs-cloudflare`, output: `.open-next/assets`
-3. **Custom domain** — DNS was already on Cloudflare, so adding `frankdoka.com` was a single click. SSL provisioned automatically
-4. **Environment** — Set `NODE_VERSION=22` and `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` in build settings
+2. **Static export** — Set `output: 'export'` in `next.config.mjs`. The whole site is content-driven (MDX) and needs no server runtime, so it builds to a folder of plain HTML/CSS/JS that Pages serves directly — no adapter, no Functions, nothing to break at runtime
+3. **Build config** — Build command: `npm run build`, output directory: `out` (set via `pages_build_output_dir` in `wrangler.jsonc`)
+4. **Custom domain** — DNS was already on Cloudflare, so adding `frankdoka.com` was a single click. SSL provisioned automatically
+5. **Environment** — Set `NODE_VERSION=22` and `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` in build settings
 
 ### CI/CD Flow
 
@@ -399,12 +405,12 @@ src/test/e2e/
 └── theme.spec.ts        # Toggle, persistence across nav, reload, label
 ```
 
-The Playwright config runs against a production build rather than the dev server — this catches issues that only surface with static generation, like missing data or hydration mismatches:
+The Playwright config runs against the real static build rather than the dev server — this catches issues that only surface with static generation, like missing data or hydration mismatches. Since a static export can't be served by `next start`, it builds the site and serves the `out/` directory with a plain static file server:
 
 ```ts
 // playwright.config.ts
 webServer: {
-  command: 'npm run build && npm start',
+  command: 'npm run build && npx serve out -l 3000',
   url: 'http://localhost:3000',
   reuseExistingServer: !process.env.CI,
   timeout: 120_000,
@@ -462,7 +468,7 @@ export async function generateMetadata({ params }) {
 | Validation | None | Zod schema checking |
 | Deploy process | Terraform + GH Actions | Git push (auto-deploy) |
 | Monthly cost | ~$0 (free tier) | $0 (free tier) |
-| Image loading | None | Blur placeholders + AVIF/WebP |
+| Image loading | None | Blur placeholders + responsive sizes |
 | Bundle analysis | None | @next/bundle-analyzer |
 | 404 recovery | Dead end | Inline Pagefind search |
 | E2E testing | None | 55 Playwright tests across 8 suites |

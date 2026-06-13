@@ -1,4 +1,4 @@
-const CACHE_VERSION = '2025-06-13'
+const CACHE_VERSION = '2026-06-13'
 const CACHE_NAME = `frankdoka-${CACHE_VERSION}`
 const OFFLINE_URL = '/'
 
@@ -26,6 +26,9 @@ self.addEventListener('activate', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
+  // Only handle GET requests; let the browser deal with the rest.
+  if (event.request.method !== 'GET') return
+
   if (event.request.mode !== 'navigate') {
     event.respondWith(
       caches.match(event.request).then((cached) => cached || fetch(event.request))
@@ -33,13 +36,18 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
+  // Network-first for navigations. Only cache successful (2xx) responses so a
+  // transient error page (e.g. a 500 during a bad deploy) can never get stuck
+  // in the cache and keep being served after the site recovers.
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        const clone = response.clone()
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
+        if (response.ok) {
+          const clone = response.clone()
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
+        }
         return response
       })
-      .catch(() => caches.match(OFFLINE_URL))
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match(OFFLINE_URL)))
   )
 })

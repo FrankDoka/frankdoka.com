@@ -16,7 +16,7 @@ export const project = {
   date: '2026-06-13',
   image: image,
   href: '/projects/portfolio-site',
-  repo: 'https://github.com/FrankDoka',
+  repo: 'https://github.com/FrankDoka/frankdoka.com',
   status: 'Active',
   type: 'Web / Portfolio',
   tags: ['Next.js', 'Tailwind CSS', 'MDX', 'TypeScript', 'Cloudflare Pages', 'Pagefind', 'Zod']
@@ -62,7 +62,7 @@ The site runs on four layers:
 - **Security headers** — Content Security Policy, X-Frame-Options, Referrer-Policy, Permissions-Policy
 - **Accessibility** — Skip-to-main link, focus-visible outlines, semantic HTML landmarks, external link handling
 - **Schema validation** — Zod validates all MDX metadata at build time, catching missing or malformed fields early
-- **Image optimization** — Blur placeholders on raster images, AVIF/WebP format negotiation, responsive `sizes`
+- **Image strategy** — Blur placeholders on raster images and responsive `sizes` (static export serves images as-is, so sources are pre-sized rather than transcoded at request time)
 - **Bundle analysis** — `@next/bundle-analyzer` for monitoring JS bundle size
 - **Performance hints** — DNS prefetch and preconnect for third-party scripts
 - **E2E testing** — 55 Playwright tests covering navigation, search, theme toggle, responsive layout, and link integrity

@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "staticDistDir": ".next/server/app",
+      "staticDistDir": "out",
       "url": [
         "/",
         "/about",
