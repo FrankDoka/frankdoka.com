@@ -26,7 +26,7 @@ const nextConfig = {
   },
   experimental: {
     viewTransition: true,
-    optimizePackageImports: ['@fortawesome/free-brands-svg-icons', '@fortawesome/free-solid-svg-icons'],
+    optimizePackageImports: ['lucide-react'],
   },
 }
 

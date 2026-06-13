@@ -1,10 +1,10 @@
 import { BlogPost } from '@/lib/mdx.ts'
-import { faCode } from '@fortawesome/free-solid-svg-icons'
+import { Code } from 'lucide-react'
 
 export const post = {
   ...BlogPost,
   type: 'Article',
-  icon: faCode,
+  icon: Code,
   date: '2025-06-07',
   title: 'Portfolio Site Rebuild — Part 2: Building the Core',
   description:
@@ -27,7 +27,7 @@ Scaffolded with `create-next-app` using the App Router and TypeScript, then inst
 
 ```bash
 npx create-next-app@latest frankdoka.com --typescript --tailwind --app --src-dir
-npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons zod
+npm install lucide-react zod
 npm install -D @next/mdx remark-gfm rehype-shiki rehype-slug fast-glob
 ```
 
@@ -130,7 +130,7 @@ Each MDX file exports a typed metadata object:
 export const post = {
   ...BlogPost,        // Base author info
   type: 'Article',
-  icon: faCloud,
+  icon: Cloud,
   date: '2025-06-01',
   title: 'Post Title',
   description: 'Description for cards and SEO.',
@@ -190,7 +190,7 @@ Four sections stacked vertically, each wrapped in `FadeIn` for progressive revea
 
 1. **Hero Banner** — Name, title, one-line bio, call-to-action button
 2. **About Me** — Short bio, portrait photo, skills grid, experience cards, links to the full `/about` page
-3. **Build Logs** — Latest 3 blog posts in a compact card layout with FontAwesome icons
+3. **Build Logs** — Latest 3 blog posts in a compact card layout with Lucide icons
 4. **Projects** — Top 2 projects in a two-column card grid with images, tags, and "View project" buttons. A "See all projects" link goes to the full listing
 
 ### Navigation

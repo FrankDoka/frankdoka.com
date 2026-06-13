@@ -1,6 +1,5 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
 import FrankPhoto from '@public/img/frank-portrait.png'
+import { type LucideIcon } from 'lucide-react'
 import glob from 'fast-glob'
 import { StaticImageData, type ImageProps } from 'next/image'
 import { z } from 'zod'
@@ -73,7 +72,7 @@ interface MDX {
 }
 
 export interface Post extends MDX {
-  icon: IconProp | FontAwesomeIconProps['icon']
+  icon: LucideIcon
   type: 'Article' | 'Tutorial' | 'Announcement'
   author: {
     name: string

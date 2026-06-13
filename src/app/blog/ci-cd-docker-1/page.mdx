@@ -1,11 +1,11 @@
 import { BlogPost } from '@/lib/mdx.ts'
-import { faGears } from '@fortawesome/free-solid-svg-icons'
+import { Cog } from 'lucide-react'
 import diagram from '../../projects/ci-cd-docker-pipeline/cicd-pipeline.svg'
 
 export const post = {
   ...BlogPost,
   type: 'Article',
-  icon: faGears,
+  icon: Cog,
   date: '2023-09-01',
   title: 'CI/CD Pipeline for NGINX on Docker — Phase 1: Architecture & Tools',
   description:

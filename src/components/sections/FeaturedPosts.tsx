@@ -2,7 +2,6 @@ import { Button } from '@/components/Button'
 import { FadeIn, FadeInStagger } from '@/components/FadeIn'
 import Section from '@/components/layout/Section'
 import { MDXEntry, Post } from '@/lib/mdx'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 
 const colsMap: Record<number, string> = {
@@ -17,13 +16,15 @@ export default function FeaturedPosts({ posts }: { posts: Array<MDXEntry<Post>> 
   return (
     <Section eyebrow="Latest" title="Build Logs & Deep Dives">
       <FadeInStagger className={`grid grid-cols-1 gap-6 ${lgCols}`}>
-        {posts.map((post) => (
+        {posts.map((post) => {
+          const Icon = post.icon
+          return (
           <FadeIn key={post.href} className="flex">
             <article className="theme-card relative flex w-full flex-col rounded-2xl border p-5 transition sm:p-6">
               <h3>
                 <Link href={post.href}>
                   <span className="absolute inset-0 rounded-2xl" />
-                  <FontAwesomeIcon size="lg" icon={post.icon} className="text-[var(--theme-text-muted)]" />
+                  <Icon className="h-5 w-5 text-[var(--theme-text-muted)]" aria-hidden="true" />
                 </Link>
               </h3>
               <p className="mt-4 flex gap-x-2 text-xs text-[var(--theme-text-muted)]">
@@ -37,7 +38,8 @@ export default function FeaturedPosts({ posts }: { posts: Array<MDXEntry<Post>> 
               <p className="mt-2 text-sm text-[var(--theme-text-secondary)]">{post.description}</p>
             </article>
           </FadeIn>
-        ))}
+          )
+        })}
       </FadeInStagger>
       <FadeIn className="mt-12 flex justify-center">
         <Button href="/blog">See all posts</Button>

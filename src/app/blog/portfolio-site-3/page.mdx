@@ -1,10 +1,10 @@
 import { BlogPost } from '@/lib/mdx.ts'
-import { faCode } from '@fortawesome/free-solid-svg-icons'
+import { Code } from 'lucide-react'
 
 export const post = {
   ...BlogPost,
   type: 'Article',
-  icon: faCode,
+  icon: Code,
   date: '2025-06-13',
   title: 'Portfolio Site Rebuild — Part 3: Features, Polish & Deployment',
   description:
@@ -353,9 +353,9 @@ A `dns-prefetch` and `preconnect` hint for `static.cloudflareinsights.com` in `<
 
 ## Performance
 
-### FontAwesome Tree Shaking
+### Icon Tree Shaking
 
-The `optimizePackageImports` config in `next.config.mjs` tells the bundler to tree-shake at build time — only icons actually referenced in code make it into the bundle.
+Icons come from `lucide-react` — each icon is its own ES module, so the bundler only ships the handful actually imported. The `optimizePackageImports` config in `next.config.mjs` keeps those imports lean at build time, with no animation or icon-font runtime to download.
 
 ### Static Generation
 

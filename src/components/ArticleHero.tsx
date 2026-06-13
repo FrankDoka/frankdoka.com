@@ -1,12 +1,11 @@
-import { type IconProp } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { type LucideIcon } from 'lucide-react'
 
 import { GridPattern } from '@/components/GridPattern'
 
 // A themed banner for the top of blog posts: a subtle grid pattern behind the
 // post's icon and type label. Gives every article a consistent visual header
 // without needing a bespoke image per post.
-export function ArticleHero({ icon, eyebrow }: { icon: IconProp; eyebrow: string }) {
+export function ArticleHero({ icon: Icon, eyebrow }: { icon: LucideIcon; eyebrow: string }) {
   return (
     <div className="mt-10 overflow-hidden rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-bg-elevated)]">
       <div className="relative flex h-44 items-center justify-center sm:h-52">
@@ -16,7 +15,7 @@ export function ArticleHero({ icon, eyebrow }: { icon: IconProp; eyebrow: string
         />
         <div className="relative flex flex-col items-center gap-4">
           <span className="flex h-20 w-20 items-center justify-center rounded-2xl border border-[var(--theme-border)] bg-[var(--theme-bg-surface)] text-teal-500">
-            <FontAwesomeIcon icon={icon} className="text-3xl" />
+            <Icon className="h-8 w-8" aria-hidden="true" />
           </span>
           <span className="text-xs font-semibold tracking-[0.2em] text-[var(--theme-text-muted)] uppercase">
             {eyebrow}
