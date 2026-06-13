@@ -1,0 +1,58 @@
+import image from './cloud-resume.svg'
+
+export const project = {
+  order: 1,
+  title: 'Cloud Resume Challenge',
+  description:
+    'Full-stack serverless resume site on AWS — S3, CloudFront, Lambda, DynamoDB, API Gateway, Terraform, and GitHub Actions CI/CD.',
+  abstract: (
+    <p>
+      A production-grade serverless website on AWS: static hosting on S3 and CloudFront, a visitor counter powered by
+      Lambda and DynamoDB, and a fully automated CI/CD pipeline with GitHub Actions. All infrastructure defined in
+      Terraform, validated by Cypress smoke tests on every deploy.
+    </p>
+  ),
+  startDate: '2023-06-01',
+  date: '2023-07-01',
+  image: image,
+  href: '/projects/cloud-resume-challenge',
+  repo: 'https://github.com/FrankDoka',
+  status: 'Completed',
+  type: 'Cloud / Serverless',
+  tags: ['AWS', 'S3', 'CloudFront', 'Lambda', 'DynamoDB', 'API Gateway', 'Terraform', 'GitHub Actions', 'Python']
+}
+
+export const metadata = {
+  title: project.title,
+  description: project.description
+}
+
+## What I Built
+
+A resume website deployed across the full AWS serverless stack — not a tutorial project, but a production-style system with real DNS, HTTPS, CI/CD, and infrastructure as code.
+
+1. **Static site** hosted on S3, served globally through CloudFront with HTTPS via ACM and a custom domain on Route 53.
+2. **Visitor counter** — JavaScript frontend hits an API Gateway endpoint backed by a Python Lambda that increments a count in DynamoDB.
+3. **Infrastructure as Code** — Every AWS resource defined in Terraform. One `terraform apply` stands up the entire stack.
+4. **CI/CD** — GitHub Actions pipeline builds, deploys, and runs Cypress smoke tests on every push to main.
+
+## Architecture
+
+```
+S3 (static site) → CloudFront (CDN + HTTPS)
+                          ↓
+               Route 53 (custom domain)
+
+Browser JS → API Gateway → Lambda (Python) → DynamoDB
+                                                ↑
+                        GitHub Actions → Terraform → All Resources
+                                    → Cypress Smoke Tests
+```
+
+## Read More
+
+- [Phase 1: AWS Accounts & Organization](/blog/cloud-resume-challenge-1)
+- [Phase 2: Building the Frontend](/blog/cloud-resume-challenge-2)
+- [Phase 3: Backend Technologies & APIs](/blog/cloud-resume-challenge-3)
+- [Phase 4: API Backend & Frontend Integration](/blog/cloud-resume-challenge-4)
+- [Phase 5: IaC, CI/CD & Smoke Testing](/blog/cloud-resume-challenge-5)

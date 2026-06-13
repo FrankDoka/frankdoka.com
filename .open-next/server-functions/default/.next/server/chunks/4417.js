@@ -1,0 +1,1 @@
+"use strict";exports.id=4417,exports.ids=[4417],exports.modules={44417:(a,b,c)=>{c.r(b),c.d(b,{default:()=>d});let d={src:"/_next/static/media/azure-k8s.42ce945b.svg",height:500,width:900,blurWidth:0,blurHeight:0}}};

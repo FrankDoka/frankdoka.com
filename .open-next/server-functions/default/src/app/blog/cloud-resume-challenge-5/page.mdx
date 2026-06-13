@@ -1,0 +1,48 @@
+import { BlogPost } from '@/lib/mdx.ts'
+import { faCloud } from '@fortawesome/free-solid-svg-icons'
+
+export const post = {
+  ...BlogPost,
+  type: 'Article',
+  icon: faCloud,
+  date: '2023-06-29',
+  title: 'Cloud Resume Challenge — Phase 5: IaC, CI/CD & Smoke Testing',
+  description:
+    'Defining all infrastructure in Terraform, building a GitHub Actions CI/CD pipeline, and adding Cypress smoke tests to validate every deploy.',
+  tags: ['AWS', 'Terraform', 'CI/CD']
+}
+
+export const metadata = {
+  title: post.title,
+  description: post.description
+}
+
+# Cloud Resume Challenge — Phase 5: IaC, CI/CD & Smoke Testing
+
+Phase 5 replaces all the manually created resources with Terraform and builds a pipeline that deploys and validates automatically.
+
+## Terraform
+
+I defined every backend resource in HCL:
+
+- **Lambda function** with packaged Python code, IAM execution role, and CloudWatch log group
+- **API Gateway** with REST routes, Lambda integration, CORS settings, and stage deployment
+- **DynamoDB table** with partition key and on-demand billing
+- **S3 bucket** for frontend static hosting
+- **ACM certificate**, CloudFront distribution, and Route 53 records
+
+One `terraform apply` stands up the entire stack. One `terraform destroy` tears it down cleanly. No more console-created resources drifting from what's in code.
+
+## CI/CD Pipeline
+
+The GitHub Actions workflow runs three stages:
+
+1. **Build** — Package the Lambda function code, install dependencies, and produce a deployment artifact.
+2. **Deploy** — Run `terraform apply` to create or update all AWS resources.
+3. **Smoke test** — Execute Cypress tests against the live API to confirm the counter works end-to-end.
+
+If any stage fails, the pipeline stops and the commit is marked as failed.
+
+## Takeaways
+
+The Cloud Resume Challenge forced me to work across the full stack — static hosting, serverless compute, databases, DNS, IaC, and CI/CD. The result is a production-grade system where every resource is defined in code, every change is deployed automatically, and every deploy is validated by tests.

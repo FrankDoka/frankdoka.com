@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-// Tracks the user's `prefers-reduced-motion` setting. Replaces framer-motion's
-// useReducedMotion so we can drop that dependency.
+// Tracks the user's `prefers-reduced-motion` setting via matchMedia.
 export function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false)
 

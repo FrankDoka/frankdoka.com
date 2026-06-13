@@ -1,0 +1,58 @@
+import image from './azure-k8s.svg'
+
+export const project = {
+  order: 4,
+  title: 'Azure Web Store on Kubernetes',
+  description:
+    'Microservices web store on AKS — Java Spring Boot services, Azure B2C identity, API Management gateway, and GitHub Actions CI/CD.',
+  abstract: (
+    <p>
+      A multi-service web store deployed on Azure Kubernetes Service — containerized Java Spring Boot microservices,
+      Azure B2C for customer identity, API Management as the gateway, and GitHub Actions automating the full
+      build-push-deploy cycle.
+    </p>
+  ),
+  startDate: '2024-01-01',
+  date: '2024-03-01',
+  image: image,
+  href: '/projects/azure-kubernetes-store',
+  repo: 'https://github.com/FrankDoka',
+  status: 'Completed',
+  type: 'Cloud / Kubernetes',
+  tags: ['Azure', 'AKS', 'Kubernetes', 'Docker', 'GitHub Actions', 'API Management', 'Azure B2C', 'Java']
+}
+
+export const metadata = {
+  title: project.title,
+  description: project.description
+}
+
+## What I Built
+
+A production-style microservices application deployed to Azure Kubernetes Service — from local Docker builds to fully automated cloud deployments with identity, API management, and observability.
+
+1. **Four containerized services** — Web App (Java Spring Boot storefront), Order Service, Product Service, and App Service, each built as a Docker image and pushed to Azure Container Registry.
+2. **AKS cluster** — Managed Kubernetes orchestrating all service pods with load balancing and scaling.
+3. **Azure B2C** — OAuth 2.0 / OIDC customer identity platform handling sign-up, sign-in, and token issuance.
+4. **API Management** — Centralized gateway with routing policies, rate limiting, and authentication enforcement.
+5. **Application Insights** — Full-stack monitoring, distributed tracing, and telemetry across all services.
+6. **GitHub Actions CI/CD** — Automated pipeline: build images, push to ACR, deploy manifests to AKS on every merge.
+
+## Architecture
+
+```
+Customer → Azure B2C (auth) → API Management (gateway)
+                                       ↓
+                              AKS Cluster
+                         ┌──────┼──────────┐
+                     Web App  Order Svc  Product Svc
+                         └──────┼──────────┘
+                                ↓
+                       Application Insights
+
+GitHub Push → Actions CI/CD → ACR (images) → AKS (deploy)
+```
+
+## Read More
+
+- [Part 1: Environment Setup & Docker Images](/blog/azure-kubernetes-store-1)

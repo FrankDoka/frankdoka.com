@@ -12,16 +12,10 @@
 
 # testing
 /coverage
-/playwright-report/
-/test-results/
 
 # next.js
 /.next/
-/.open-next/
 /out/
-
-# production
-/build
 
 # pagefind (generated at build time)
 /public/pagefind

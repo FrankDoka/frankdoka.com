@@ -1,0 +1,53 @@
+import image from './cicd-pipeline.svg'
+
+export const project = {
+  order: 3,
+  title: 'CI/CD Pipeline for NGINX on Docker',
+  description:
+    'End-to-end CI/CD pipeline — Terraform provisions AWS infrastructure, Ansible configures hosts via dynamic inventory, Docker packages NGINX, and Jenkins orchestrates every stage.',
+  abstract: (
+    <p>
+      A four-layer automation stack: Terraform provisions EC2 infrastructure, Ansible configures instances through
+      dynamic inventory, Docker packages NGINX with TLS, and Jenkins orchestrates the full pipeline on every code push.
+    </p>
+  ),
+  startDate: '2023-09-01',
+  date: '2023-10-01',
+  image: image,
+  href: '/projects/ci-cd-docker-pipeline',
+  repo: 'https://github.com/FrankDoka',
+  status: 'Completed',
+  type: 'DevOps / CI/CD',
+  tags: ['Terraform', 'Ansible', 'Jenkins', 'Docker', 'NGINX', 'AWS', 'EC2', 'CI/CD', 'IaC']
+}
+
+export const metadata = {
+  title: project.title,
+  description: project.description
+}
+
+## What I Built
+
+A fully automated pipeline that takes a Dockerized NGINX web server from code commit to running AWS deployment — no manual steps, no SSH, no ClickOps.
+
+1. **Docker** — Packages NGINX with a self-signed OpenSSL certificate into a portable container image.
+2. **Terraform** — Defines EC2 instances, security groups, and key pairs as code. One `terraform apply` stands up the infrastructure.
+3. **Ansible** — Configures EC2 instances using AWS dynamic inventory for real-time host discovery. Playbooks install Docker and deploy the container.
+4. **Jenkins** — Orchestrates the full flow: on each Git push, Jenkins runs Terraform, executes the Ansible playbook, and smoke-tests the deployment.
+
+## Pipeline
+
+```
+Git Push → Jenkins Trigger
+  → Terraform Apply (provision/update EC2)
+  → Ansible Playbook (configure + deploy container)
+  → Smoke Test (verify NGINX is responding)
+```
+
+## Read More
+
+- [Phase 1: Architecture & Tools](/blog/ci-cd-docker-1)
+- [Phase 2: Creating the Docker Image](/blog/ci-cd-docker-2)
+- [Phase 3: Infrastructure with Terraform](/blog/ci-cd-docker-3)
+- [Phase 4: Ansible & Dynamic Inventory](/blog/ci-cd-docker-4)
+- [Phase 5: Automated Deployments with Jenkins](/blog/ci-cd-docker-5)

@@ -1,0 +1,52 @@
+import { BlogPost } from '@/lib/mdx.ts'
+import { faStore } from '@fortawesome/free-solid-svg-icons'
+
+export const post = {
+  ...BlogPost,
+  type: 'Article',
+  icon: faStore,
+  date: '2024-01-15',
+  title: 'Azure Web Store on Kubernetes — Part 1: Environment Setup & Docker Images',
+  description:
+    'Setting up the Azure environment, building and testing Docker images for all microservices locally, and preparing for AKS deployment.',
+  tags: ['Azure', 'Kubernetes', 'Docker']
+}
+
+export const metadata = {
+  title: post.title,
+  description: post.description
+}
+
+# Azure Web Store on Kubernetes — Part 1: Environment Setup & Docker Images
+
+Part 1 covers the foundation: setting up Azure resources and building Docker images for all four microservices before deploying to Kubernetes.
+
+## Azure Resources
+
+Deployed the initial Azure infrastructure:
+
+- **Azure Container Registry** — Private registry for storing Docker images
+- **App Service + App Service Plan** — Initial hosting target before migrating to AKS
+- **AKS cluster** — Managed Kubernetes for the final deployment
+
+## Building Docker Images Locally
+
+The microservices are pre-built Java Spring Boot applications. Before pushing anything to Azure, I built and tested all four images locally:
+
+```bash
+# Create a bridge network for inter-service communication
+docker network create webappbridge
+
+# Build and run each service
+docker build -t webappservice .
+docker run --rm --net webappbridge --name webappservice \
+  -p 8081:8081 -e WEBAPPSERVICE_SERVER_PORT=8081 -d webappservice:latest
+
+# Repeat for Product Service (8082) and Order Service (8083)
+```
+
+Each service runs on its own port, communicates over the Docker bridge network, and responds correctly to API calls — confirmed with local testing before touching Azure.
+
+## What's Next
+
+Part 2 pushes images to Azure Container Registry, configures continuous deployment from ACR to App Service, and sets up the GitHub Actions CI/CD pipeline.

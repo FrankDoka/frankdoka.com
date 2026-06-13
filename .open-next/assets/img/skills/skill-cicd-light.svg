@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 48" width="80" height="48">
+  <rect x="2" y="16" width="16" height="16" rx="3" fill="#333"/>
+  <text x="10" y="28" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="white" text-anchor="middle">CI</text>
+  <path d="M18 24h12" stroke="#666" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="30" y="16" width="16" height="16" rx="3" fill="#333"/>
+  <text x="38" y="28" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="white" text-anchor="middle">CD</text>
+  <path d="M46 24h12" stroke="#666" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="58" y="16" width="20" height="16" rx="3" fill="#28a745"/>
+  <text x="68" y="28" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="white" text-anchor="middle">DEPLOY</text>
+  <defs>
+    <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 z" fill="#666"/>
+    </marker>
+  </defs>
+</svg>

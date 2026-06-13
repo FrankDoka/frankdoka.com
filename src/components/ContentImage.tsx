@@ -1,8 +1,7 @@
 import Image, { type ImageProps } from 'next/image'
 
-// Thin wrapper around next/image for diagrams and content images. (Replaces the
-// former framer-motion GrayscaleTransitionImage; the scroll-grayscale effect was
-// dropped — it added a dependency and looked off on flat diagrams.)
+// Thin wrapper around next/image for diagrams and content images, rendered
+// full-width and uncropped.
 export function ContentImage({
   alt = '',
   ...props

@@ -1,0 +1,59 @@
+import image from './text-to-speech.svg'
+
+export const project = {
+  order: 2,
+  title: 'Text-to-Speech Serverless App',
+  description:
+    'Serverless multilingual text-to-speech app on AWS — Cognito auth, Lambda processing pipeline, Polly synthesis, and Terraform IaC.',
+  abstract: (
+    <p>
+      Authenticated users submit text, pick a target language, and get back synthesized audio — all processed
+      asynchronously through a decoupled AWS serverless pipeline with Cognito, Lambda, Polly, Translate, and DynamoDB.
+    </p>
+  ),
+  startDate: '2023-11-01',
+  date: '2023-12-01',
+  image: image,
+  href: '/projects/text-to-speech',
+  repo: 'https://github.com/FrankDoka',
+  status: 'Completed',
+  type: 'Cloud / Serverless',
+  tags: ['AWS', 'Lambda', 'Polly', 'Cognito', 'DynamoDB', 'Terraform', 'API Gateway', 'SNS', 'S3', 'React']
+}
+
+export const metadata = {
+  title: project.title,
+  description: project.description
+}
+
+## What I Built
+
+A full-stack serverless application that translates text into any supported language and synthesizes it as spoken audio — secured with Cognito, processed asynchronously, and deployed entirely with Terraform.
+
+1. **React frontend** hosted on Amplify with Cognito sign-up/sign-in and JWT-based API authorization.
+2. **Submission pipeline** — API Gateway receives text, Lambda writes to DynamoDB and publishes to SNS for async processing.
+3. **Processing pipeline** — A second Lambda translates the text via Amazon Translate, synthesizes speech with Polly, and stores the audio in S3.
+4. **Retrieval** — The frontend polls a third Lambda to fetch the completed audio file URL from DynamoDB.
+5. **Infrastructure as Code** — Every resource defined in Terraform.
+
+## Architecture
+
+```
+User → React (Amplify) → Cognito Auth → API Gateway → Lambda (submit)
+                                                           ↓
+                                                      DynamoDB + SNS
+                                                           ↓
+                                              Lambda (process: Translate + Polly)
+                                                           ↓
+                                                      S3 (audio) + DynamoDB (update)
+                                                           ↓
+                                              Lambda (retrieve) → React UI
+```
+
+## Read More
+
+- [Phase 1: Frontend & Login System](/blog/text-to-speech-1)
+- [Phase 2: Serverless Backend & Data Storage](/blog/text-to-speech-2)
+- [Phase 3: AWS Polly, Translate & S3 Storage](/blog/text-to-speech-3)
+- [Phase 4: Frontend Integration & Retrieval](/blog/text-to-speech-4)
+- [Phase 5: Infrastructure as Code with Terraform](/blog/text-to-speech-5)

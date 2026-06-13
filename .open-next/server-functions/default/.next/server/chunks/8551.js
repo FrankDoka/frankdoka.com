@@ -1,0 +1,1 @@
+"use strict";exports.id=8551,exports.ids=[8551],exports.modules={98551:(a,b,c)=>{c.r(b),c.d(b,{default:()=>d});let d={src:"/_next/static/media/text-to-speech.f2b8ff3d.svg",height:500,width:900,blurWidth:0,blurHeight:0}}};

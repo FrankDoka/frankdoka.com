@@ -1,0 +1,1 @@
+"use strict";exports.id=2365,exports.ids=[2365],exports.modules={32365:(a,b,c)=>{c.r(b),c.d(b,{default:()=>d});let d={src:"/_next/static/media/cicd-pipeline.e3c41159.svg",height:500,width:900,blurWidth:0,blurHeight:0}}};

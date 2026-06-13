@@ -1,0 +1,37 @@
+import { BlogPost } from '@/lib/mdx.ts'
+import { faCloud } from '@fortawesome/free-solid-svg-icons'
+
+export const post = {
+  ...BlogPost,
+  type: 'Article',
+  icon: faCloud,
+  date: '2023-06-22',
+  title: 'Cloud Resume Challenge — Phase 4: API Backend & Frontend Integration',
+  description:
+    'Connecting the visitor counter API to the frontend — solving CORS, wiring JavaScript to API Gateway, and adding Cypress integration tests.',
+  tags: ['AWS', 'Serverless']
+}
+
+export const metadata = {
+  title: post.title,
+  description: post.description
+}
+
+# Cloud Resume Challenge — Phase 4: API Backend & Frontend Integration
+
+Phase 4 connects the dots — the frontend JavaScript calls the API, the visitor count displays on the page, and automated tests verify the full flow.
+
+## What I Built
+
+1. **JavaScript visitor counter** — A fetch call to the API Gateway endpoint on page load. The response (current count) renders into the DOM. Clean, minimal — no framework needed.
+2. **CORS configuration** — The browser blocks cross-origin requests by default. I configured API Gateway to return the correct `Access-Control-Allow-Origin` header for the custom domain, plus allowed methods and headers.
+3. **Cypress integration tests** — End-to-end tests that verify the counter increments correctly, the API returns valid JSON, and edge cases (rapid refreshes, unexpected input) are handled cleanly.
+4. **CI/CD updates** — Integrated the frontend repo into the GitHub Actions pipeline. AWS credentials stored as GitHub Actions secrets, rotated after initial setup.
+
+## The CORS Lesson
+
+CORS was the most frustrating part of the entire challenge. The fix was straightforward (add the right headers in API Gateway), but debugging it required understanding that the browser preflight (OPTIONS) request needs its own response — not just the main GET/POST.
+
+## Result
+
+A working end-to-end flow: page loads, JavaScript calls the API, Lambda increments DynamoDB, the count displays on the page. Cypress confirms it works on every deploy.

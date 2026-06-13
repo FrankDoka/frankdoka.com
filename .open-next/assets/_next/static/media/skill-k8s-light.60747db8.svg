@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <circle cx="24" cy="24" r="22" fill="#326CE5"/>
+  <path d="M24 8.5l-1.7.5-9.8 3.4-.5 1.9.5 10.6 1.5 1.2 10.7-.6.6-1.3-.6-10.7L24 8.5z" fill="none" stroke="white" stroke-width="1.5"/>
+  <path d="M24 8.5l1.7.5 9.8 3.4.5 1.9-.5 10.6-1.5 1.2-10.7-.6-.6-1.3.6-10.7L24 8.5z" fill="none" stroke="white" stroke-width="1.5"/>
+  <circle cx="24" cy="24" r="4" fill="white"/>
+  <text x="24" y="43" font-family="Arial,sans-serif" font-size="7" font-weight="bold" fill="white" text-anchor="middle">K8s</text>
+</svg>
