@@ -10,7 +10,6 @@ const siteLinks = [
   { title: 'About', href: '/about' },
   { title: 'Blog', href: '/blog' },
   { title: 'Projects', href: '/projects' },
-  { title: 'Games', href: '/games' },
   { title: 'Toolbox', href: '/toolbox' },
 ]
 

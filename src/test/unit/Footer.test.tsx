@@ -35,7 +35,7 @@ describe('Footer', () => {
   it('renders all site map links', () => {
     render(<Footer />)
     expect(screen.getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about')
-    expect(screen.getByRole('link', { name: 'Games' })).toHaveAttribute('href', '/games')
+    expect(screen.getByRole('link', { name: 'Blog' })).toHaveAttribute('href', '/blog')
     expect(screen.getByRole('link', { name: 'Toolbox' })).toHaveAttribute('href', '/toolbox')
   })
 
