@@ -1,1 +1,0 @@
-"use strict";exports.id=7203,exports.ids=[7203],exports.modules={37203:(a,b,c)=>{c.r(b),c.d(b,{default:()=>d});let d={src:"/_next/static/media/portfolio-site.c6ec5d1a.svg",height:540,width:900,blurWidth:0,blurHeight:0}}};

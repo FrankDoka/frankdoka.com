@@ -1,1 +1,0 @@
-"use strict";exports.id=5453,exports.ids=[5453],exports.modules={75453:(a,b,c)=>{c.r(b),c.d(b,{default:()=>d});let d={src:"/_next/static/media/cloud-resume.bb818e3f.svg",height:500,width:900,blurWidth:0,blurHeight:0}}};

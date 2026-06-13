@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /out/
+/.open-next/
 
 # pagefind (generated at build time)
 /public/pagefind
