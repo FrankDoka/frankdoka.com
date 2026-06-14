@@ -31,7 +31,7 @@ export default function ShowcaseList(props: Props) {
           {props.items.map(([name, icon]) => (
             <li key={name}>
               <FadeIn>
-                <div className="theme-card flex items-center gap-3 rounded-xl border px-4 py-3">
+                <div className="flex items-center gap-3 rounded-xl border border-[var(--theme-card-border)] bg-[var(--theme-card-bg)] px-4 py-3 select-none">
                   <Image
                     height={props.height ?? 24}
                     src={icon}
