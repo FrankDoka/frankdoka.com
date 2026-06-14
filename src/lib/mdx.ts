@@ -110,3 +110,11 @@ export function loadPosts() {
 export function loadProjects() {
   return loadEntries<Project>('projects', 'project', projectSchema)
 }
+
+// Games reuse the project metadata shape. The section is intentionally UNLISTED:
+// nothing links to /games, and it's excluded from the sitemap, RSS, and on-site
+// search — but the pages render and are reachable by direct URL.
+export type Game = Project
+export function loadGames() {
+  return loadEntries<Project>('games', 'game', projectSchema)
+}

@@ -2,9 +2,17 @@
 
 Source for my personal portfolio at **[frankdoka.com](https://frankdoka.com/)**.
 
+## Documentation
+
+- **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — how the site works (stack, static export, MDX pipeline, theming, search, SEO).
+- **[docs/ADDING-CONTENT.md](docs/ADDING-CONTENT.md)** — how to add a blog post, project, game, experience entry, or image.
+- **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** — the local → GitHub → Cloudflare flow, domain/DNS, headers, and troubleshooting.
+
 ## Tech stack
 
 Next.js 15 (App Router) · TypeScript · Tailwind CSS v4 · MDX · Pagefind · Cloudflare Pages
+
+Statically exported (`output: 'export'`) — no server runtime; Cloudflare Pages serves the `out/` directory.
 
 ## Features
 
@@ -49,6 +57,7 @@ src/
   app/               Routes — blog posts, projects, pages
     blog/            MDX blog posts at blog/<slug>/page.mdx
     projects/        MDX project pages at projects/<slug>/page.mdx
+    games/           Unlisted "Game Dev Log" (noindex; not in nav/search/sitemap)
     experience/      Work experience detail pages
   components/
     blocks/          Composed UI blocks (article lists, showcases)
@@ -69,7 +78,7 @@ public/
 
 ## Deployment
 
-Cloudflare Pages auto-deploys on push to `main`. Pull requests get preview URLs.
+Cloudflare Pages auto-deploys on push to `main`; pull requests get preview URLs. See **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)** for the full flow, domain/DNS, and headers.
 
 ## CI
 
