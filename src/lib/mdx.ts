@@ -1,4 +1,4 @@
-import FrankPhoto from '@public/img/frank-portrait.png'
+import FrankPhoto from '@public/img/frank-portrait.webp'
 import { type LucideIcon } from 'lucide-react'
 import glob from 'fast-glob'
 import { StaticImageData, type ImageProps } from 'next/image'

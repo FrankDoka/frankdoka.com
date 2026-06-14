@@ -1,6 +1,6 @@
 import { FadeIn, FadeInStagger } from '@/components/FadeIn'
 import { Container } from '@/components/layout/Container'
-import imageFrank from '@public/img/frank-portrait.png'
+import imageFrank from '@public/img/frank-portrait.webp'
 import skillAWS from '@public/img/skills/skill-aws-light.svg'
 import skillAzure from '@public/img/skills/skill-azure-light.svg'
 import skillDocker from '@public/img/skills/skill-docker-light.svg'
