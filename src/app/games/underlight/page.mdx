@@ -1,0 +1,130 @@
+import cover from './cover.svg'
+import lighting from './raymarch-lighting.svg'
+
+export const game = {
+  order: 1,
+  title: 'Underlight',
+  description:
+    'A descent RPG where you guide a character ever deeper into a lightless world, seeing only what your own light reveals. Built on a custom engine-less stack — vanilla TypeScript driving a WebGL2 raymarched light field and a fully synthesized Web Audio score — with run-based progression that grows your character the further down you push.',
+  abstract: (
+    <p>
+      A side project built around one idea: a world that is pitch black until your character lights it. Underlight is a
+      descent RPG — you go deeper and deeper, and the deeper you get the more dangerous (and rewarding) it becomes. It
+      runs on a from-scratch browser engine with no game framework: a WebGL2 fragment shader raymarches the lighting,
+      the audio is generated at runtime, and the whole thing ships as a tiny static bundle.
+    </p>
+  ),
+  startDate: '2026-06-14',
+  date: '2026-06-14',
+  image: cover,
+  href: '/games/underlight',
+  status: 'In development',
+  type: 'Game / Descent RPG',
+  tags: ['TypeScript', 'WebGL2', 'GLSL', 'Web Audio API', 'Vite', 'Game Design', 'Procedural Generation'],
+}
+
+export const metadata = {
+  title: game.title,
+  description: game.description,
+  robots: { index: false, follow: false },
+}
+
+## Overview
+
+**Underlight** is a browser RPG I'm building on the side, around a single hook: *the world is dark until you light it.*
+You guide a character downward through a world that only exists, visually, where your light reaches — and the goal is
+simple to state and hard to do: **go deeper.** The further you descend, the worse the odds get and the better the
+rewards, so every run is a push-your-luck question of how far you dare to go before you turn back.
+
+This page is an engine-and-prototype dev log. Right now the interesting, finished part is the **engine** — a
+deliberately minimal, framework-free foundation — and the game is being built on top of it. I'm documenting the tech
+first because it's what makes the rest possible.
+
+## The engine: no framework, just the web platform
+
+Most browser games reach for an engine. I went the other way and built a small one from scratch in **strict
+TypeScript**, with no runtime dependencies — the only tooling is Vite for the dev server and the production build. The
+result compiles to a static bundle of a few kilobytes and drops straight onto my existing Cloudflare Pages setup.
+
+The architecture is split into clean, independent layers so the game logic never has to know how anything is drawn or
+heard:
+
+- **Fixed-timestep loop** — the simulation updates at a constant 120 Hz regardless of monitor refresh rate, and the
+  renderer interpolates between simulation states, so motion stays smooth and deterministic on any display.
+- **Unified input** — a single movement vector and an edge-triggered action, fed by either a floating touch joystick
+  (drag to move, tap to act) or keyboard, so the same game runs on a phone or a desktop.
+- **Pluggable renderer** — a tiny interface with two backends, chosen by feature detection at startup (more below).
+- **Synthesized audio** — no audio files at all; every sound is generated on the fly.
+
+## The signature piece: a raymarched light field
+
+The reason the "dark until you light it" idea works is the renderer. Two `<canvas>` elements are stacked: a **WebGL2**
+layer that draws the light, and a **Canvas2D** layer on top for crisp UI.
+
+The light itself is computed in a **GLSL fragment shader** that runs for every pixel on screen. The world's geometry is
+described as a **signed-distance field** (SDF) — a function that returns how far any point is from the nearest
+obstacle. For each pixel, the shader marches a ray toward the light source through that field and accumulates how much
+it gets blocked. A clear path is fully lit; a path interrupted by rock falls into shadow; and a ray that just grazes an
+edge produces a **soft penumbra** instead of a hard line — the trick that makes the shadows look believable.
+
+<Figure
+  src={lighting}
+  alt="A light source at top-right; three rays leave pixels at the lower-left toward it — one reaching the light cleanly (lit), one blocked by an obstacle (shadowed), and one grazing the obstacle's edge (soft penumbra)."
+  caption="How each pixel is lit: march a ray toward the light through the SDF and accumulate occlusion."
+/>
+
+Because not every device or browser exposes WebGL2, the renderer falls back automatically to a **Canvas2D** backend
+that recreates the same look with radial gradients and projected shadow shapes. It's softer and cheaper, but the game
+reads identically — nobody gets a blank screen.
+
+## Audio you can't pre-record
+
+The sound is **fully synthesized** with the Web Audio API. There are no `.mp3` or `.wav` assets to download. Tones are
+built from oscillators with shaped envelopes, then routed through a **convolution reverb** whose impulse response is
+generated at runtime — so the reverb tail behaves as if it were measuring the space around the character. Keeping audio
+procedural means it costs nothing to ship and can react to the game state instead of being a fixed clip.
+
+## The game on top
+
+With the engine solid, the RPG layer is what I'm building now. The design direction:
+
+- **A character, not just an avatar.** You have stats, health, and a kit that grows — this is an RPG, so the character
+  you build is the point, not just a dot that moves.
+- **Descent as the core loop.** Progress is measured by depth. You choose to push deeper for better rewards or bank
+  what you have — the tension lives in that decision.
+- **Run-based progression.** Each descent makes your character stronger through choices made along the way, with
+  difficulty scaling to match, so later depths stay threatening no matter how strong you get.
+- **The dark as a mechanic, not just a mood.** Limited light means limited information; what you can't see can hurt
+  you, and managing your light is part of play.
+
+## Tech stack
+
+| Layer | Choice |
+|---|---|
+| Language | TypeScript (strict, zero runtime dependencies) |
+| Rendering | WebGL2 + GLSL fragment shader (SDF raymarched lighting), Canvas2D fallback |
+| Audio | Web Audio API — synthesized tones + runtime convolution reverb |
+| Loop | Fixed-timestep (120 Hz) with render interpolation |
+| Input | Unified touch joystick + keyboard |
+| Build | Vite (dev + static build) |
+| Hosting | Static bundle on Cloudflare Pages |
+
+The guiding principle is the same one that makes the determinism and the tiny bundle possible: keep the game logic
+free of the engine plumbing, so the renderer and audio are just consumers of the game's state.
+
+## Roadmap
+
+- **Phase 1 — Engine** *(done)*: fixed-timestep loop, unified input, the WebGL2 raymarched light field with a Canvas2D
+  fallback, and synthesized audio.
+- **Phase 2 — Character & combat** *(next)*: the playable character, stats and health, and the first encounters in the
+  dark.
+- **Phase 3 — Descent & progression**: depth-based difficulty, run rewards, and the choices that grow a character over
+  a run.
+- **Later**: more content, persistence, and a deeper build/progression layer.
+
+## Status
+
+In active development. The engine runs end-to-end — you can move a character through a dark space, emit light, and
+watch geometry resolve out of the black with soft shadows — and the next milestone is turning that foundation into an
+actual character and combat loop. This page is a living dev log; I'll add milestones and screenshots as the game takes
+shape.

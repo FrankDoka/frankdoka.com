@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-label="Diagram of how the renderer lights each pixel: for every pixel it marches a ray toward the light source through a signed-distance field; rays blocked by an obstacle land in shadow, and rays that graze an edge produce a soft penumbra.">
+  <defs>
+    <linearGradient id="d-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a131d"/>
+      <stop offset="1" stop-color="#050b13"/>
+    </linearGradient>
+    <radialGradient id="d-light" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffe8b0" stop-opacity="1"/>
+      <stop offset="1" stop-color="#ffb74d" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .lbl { font: 600 16px ui-monospace, "SFMono-Regular", Menlo, monospace; fill: #cfe9f5; }
+      .mut { font: 500 13px ui-monospace, Menlo, monospace; fill: #6f93a6; }
+      .lit { stroke: #5fd0f0; }
+      .shd { stroke: #ff7a5c; }
+      .pen { stroke: #ffce6b; }
+    </style>
+  </defs>
+
+  <rect width="900" height="500" fill="url(#d-bg)"/>
+  <rect x="1" y="1" width="898" height="498" fill="none" stroke="#16384a" stroke-width="2" rx="14"/>
+
+  <!-- Light source -->
+  <circle cx="720" cy="120" r="70" fill="url(#d-light)"/>
+  <circle cx="720" cy="120" r="9" fill="#fff3d6"/>
+  <text x="720" y="60" text-anchor="middle" class="lbl">light (ping origin)</text>
+
+  <!-- Occluder (an SDF circle) -->
+  <circle cx="470" cy="300" r="58" fill="#0c1c28" stroke="#3fa9cf" stroke-width="2.5"/>
+  <text x="470" y="305" text-anchor="middle" class="mut">SDF</text>
+  <text x="470" y="322" text-anchor="middle" class="mut">obstacle</text>
+
+  <!-- Lit ray: clear path pixel -> light -->
+  <line x1="180" y1="180" x2="720" y2="120" class="lit" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <circle cx="180" cy="180" r="6" fill="#5fd0f0"/>
+  <text x="120" y="176" class="lbl" fill="#5fd0f0">lit</text>
+
+  <!-- Shadowed ray: blocked by occluder -->
+  <line x1="250" y1="430" x2="470" y2="300" class="shd" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <line x1="470" y1="300" x2="720" y2="120" stroke="#ff7a5c" stroke-width="1.5" stroke-dasharray="3 9" opacity="0.35"/>
+  <circle cx="250" cy="430" r="6" fill="#ff7a5c"/>
+  <text x="150" y="446" class="lbl" fill="#ff7a5c">shadowed</text>
+
+  <!-- Penumbra ray: grazes the edge -->
+  <line x1="420" y1="450" x2="720" y2="120" class="pen" stroke-width="2.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <circle cx="420" cy="450" r="6" fill="#ffce6b"/>
+  <text x="430" y="470" class="lbl" fill="#ffce6b">soft penumbra (grazes edge)</text>
+
+  <!-- Caption strip -->
+  <text x="40" y="40" class="lbl">per pixel: march toward the light, accumulate occlusion</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="A lone figure with a point of light descends a dark vertical shaft, the glow revealing rough cave walls that fade into blackness below.">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#081019"/>
+      <stop offset="0.55" stop-color="#040a12"/>
+      <stop offset="1" stop-color="#01040a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#bfefff" stop-opacity="0.95"/>
+      <stop offset="0.18" stop-color="#7fe0ff" stop-opacity="0.7"/>
+      <stop offset="0.5" stop-color="#2ea7d8" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#2ea7d8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.42" r="0.75">
+      <stop offset="0.55" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.85"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+
+  <!-- Cave shaft walls, narrowing with depth -->
+  <g fill="#0b1622" stroke="#16384a" stroke-width="2" opacity="0.9">
+    <path d="M0,0 L0,675 L300,675 L360,520 L300,400 L380,260 L320,120 L400,0 Z"/>
+    <path d="M1200,0 L1200,675 L900,675 L840,520 L900,400 L820,260 L880,120 L800,0 Z"/>
+  </g>
+
+  <!-- Rocky ledges catching the light -->
+  <g stroke="#3fa9cf" stroke-width="2.5" fill="none" opacity="0.45">
+    <path d="M360,300 q60,-30 130,-10"/>
+    <path d="M720,330 q70,-20 150,5"/>
+    <path d="M420,470 q80,-25 150,0"/>
+    <path d="M700,510 q60,-15 130,-5"/>
+  </g>
+
+  <!-- The light the character carries -->
+  <circle cx="600" cy="300" r="300" fill="url(#glow)" filter="url(#soft)"/>
+  <circle cx="600" cy="288" r="10" fill="#eafdff"/>
+
+  <!-- Descending figure silhouette -->
+  <g fill="#02060b" stroke="#0a2230" stroke-width="2">
+    <circle cx="600" cy="262" r="16"/>
+    <path d="M584,284 q16,-12 32,0 l6,58 q-22,12 -44,0 Z"/>
+    <path d="M588,300 l-22,30 M612,300 l22,26"/>
+    <path d="M592,342 l-8,52 M608,342 l10,50"/>
+  </g>
+
+  <!-- Drifting motes -->
+  <g fill="#9fe9ff">
+    <circle cx="520" cy="230" r="2.5" opacity="0.8"/>
+    <circle cx="690" cy="250" r="2" opacity="0.6"/>
+    <circle cx="560" cy="360" r="2.2" opacity="0.5"/>
+    <circle cx="650" cy="400" r="1.8" opacity="0.45"/>
+    <circle cx="470" cy="320" r="1.6" opacity="0.4"/>
+  </g>
+
+  <!-- Depth fading to black below -->
+  <rect y="470" width="1200" height="205" fill="#01040a" opacity="0.55"/>
+  <rect width="1200" height="675" fill="url(#vignette)"/>
+</svg>
