@@ -60,10 +60,12 @@ The rest of this log is *how* that happened — and where it's going next.
   the move to a smooth checkpoint + a style LoRA + a hi-res pass + a face/hand detailer + best-of-N
   curation that produced the current roster.
 - **[Keeping them consistent →](/lab/spriteforge/consistency)** — re-posing a character with ControlNet
-  + IPAdapter, where that drifts, and the plan to lock identity with a per-character LoRA (for poses,
-  gear swaps, and animation).
-- **[Animating them →](/lab/spriteforge/animation)** — turning a static sprite into motion with Wan 2.1
-  image-to-video, in the smooth style.
+  + IPAdapter, where that drifts, and how a per-character LoRA solved it (same face, any pose, any gear).
+- **[Animating them →](/lab/spriteforge/animation)** — the first motion experiment: a static sprite into
+  motion with Wan 2.1 image-to-video.
+- **[Bringing her to life →](/lab/spriteforge/motion)** — the honest, ongoing motion log: failed
+  image-to-video, procedural rigs, and the breakthrough — Wan 2.2 Animate (motion-driven) + image-to-video
+  action clips that actually work.
 
 ## How it's built
 
@@ -71,7 +73,7 @@ The toolkit is deliberately small and engine-agnostic — a few commands a game 
 
 ```
 lib/    comfy.mjs (API client) · matte.mjs (the alpha matting) · graphs.mjs (workflows)
-bin/    forge (generate) · poses (build pose library) · repose (re-pose) · curate (best-of-N) · animate (i2v)
+bin/    forge (generate) · poses · repose · curate (best-of-N) · lora-pose · dataset · animate · pack
 ```
 
 ## Roadmap
@@ -79,7 +81,9 @@ bin/    forge (generate) · poses (build pose library) · repose (re-pose) · cu
 - **Generation + clean edges** *(done)* — crisp transparent sprites from a prompt, verified on any background.
 - **Premium style** *(done)* — smooth checkpoint + style LoRA + hi-res + face/hand detailer + curation.
 - **Consistency** *(solved)* — a per-character LoRA locks the exact look: same face, any pose, any gear.
-- **Animation** *(prototyping)* — image-to-video, then folded into the toolkit and scaled across the roster.
+- **Motion-driven video** *(working)* — Wan 2.2 Animate maps a driving video's motion onto the character.
+- **Action clips** *(in progress)* — Wan 2.2 image-to-video for standalone short clips from a LoRA frame.
+- **Next** — extend clips to 5–10 s (chaining + RIFE), in-engine part rigs, and replicate across the roster.
 
 In active development. The first game ([Wayfarer](/games/wayfarer)) already runs on it; the point of
 pulling it out is that the next one won't have to rebuild any of this.
