@@ -10,7 +10,10 @@ export default function manifest(): MetadataRoute.Manifest {
     description:
       'Infrastructure Architect and Cloud Engineer specializing in Azure, AWS, and automation with Terraform, Python, and PowerShell.',
     start_url: '/',
-    display: 'standalone',
+    // 'browser' (not 'standalone') keeps the site non-installable, so browsers
+    // don't show an "install app" prompt. The manifest still supplies the name,
+    // theme color, and icons used for tabs/bookmarks.
+    display: 'browser',
     background_color: '#0a0a0a',
     theme_color: '#0a0a0a',
     icons: [
