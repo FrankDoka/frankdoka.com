@@ -94,6 +94,10 @@ const withMDX = createMDX({
         [
           new RegExp(`^${escapeStringRegexp(path.resolve('src/app/games'))}/*`),
           [[remarkMDXLayout, '@/app/games/wrapper', 'game']]
+        ],
+        [
+          new RegExp(`^${escapeStringRegexp(path.resolve('src/app/lab'))}/*`),
+          [[remarkMDXLayout, '@/app/lab/wrapper', 'lab']]
         ]
       ]
     ]

@@ -8,8 +8,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      // Unlisted dev-log section — reachable by direct link but kept out of crawlers.
-      disallow: '/games',
+      // Unlisted sections — reachable by direct link but kept out of crawlers.
+      disallow: ['/games', '/lab'],
     },
     sitemap: 'https://frankdoka.com/sitemap.xml',
   }

@@ -121,3 +121,12 @@ export async function loadGames() {
   // /games/wayfarer/art-pipeline are linked from their parent, not listed.
   return all.filter((g) => g.href.split('/').filter(Boolean).length === 2)
 }
+
+// The Lab holds personal creative-tech R&D (tools, pipelines, experiments). Like /games,
+// it's intentionally UNLISTED: absent from nav, sitemap, RSS, and on-site search, reachable
+// only by direct link. Reuses the project metadata shape.
+export type Lab = Project
+export async function loadLab() {
+  const all = await loadEntries<Project>('lab', 'lab', projectSchema)
+  return all.filter((l) => l.href.split('/').filter(Boolean).length === 2)
+}

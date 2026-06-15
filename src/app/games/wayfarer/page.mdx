@@ -78,8 +78,9 @@ technique I should have reached for first: **alpha matting with colour decontami
 pixel's *true* colour instead of keeping the background blend. BiRefNet provides a semantic mask, and the matting
 subtracts the background the edge absorbed, so the cutout is clean on **any** background.
 
-**→ [Read the full art-pipeline deep dive](/games/wayfarer/art-pipeline)** — the whole process, the wrong turns, and
-the matting maths that finally solved it.
+The whole pipeline has since grown into its own reusable toolkit. **→ [SpriteForge](/lab/spriteforge)** —
+the full process, the wrong turns, the matting maths that finally solved the edges, and how the *same*
+character gets re-posed into new stances.
 
 ## Tech stack
 
