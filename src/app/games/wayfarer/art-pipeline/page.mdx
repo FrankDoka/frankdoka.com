@@ -1,0 +1,111 @@
+import cover from './cover.png'
+
+export const game = {
+  order: 99,
+  title: 'Wayfarer — The Art Pipeline',
+  description:
+    'How Wayfarer generates its characters: a fully local Stable Diffusion + Wan pipeline that turns text prompts into clean, transparent, game-ready pixel-art sprites — and the long road to solving the transparent-edge problem with proper alpha matting.',
+  abstract: (
+    <p>
+      A deep dive into Wayfarer&apos;s art pipeline — generating cute, sexy gacha-style pixel-art characters locally on
+      an RTX 4090, cutting them out with clean transparent edges, and animating them. Includes the multi-session saga
+      of fixing the white-edge problem, which ended where it should have started: proper alpha matting.
+    </p>
+  ),
+  startDate: '2026-06-14',
+  date: '2026-06-15',
+  image: cover,
+  href: '/games/wayfarer/art-pipeline',
+  status: 'Documented',
+  type: 'Dev Log / Art Pipeline',
+  tags: ['Stable Diffusion', 'ComfyUI', 'Alpha Matting', 'BiRefNet', 'Wan 2.1', 'Pixel Art', 'Node.js', 'sharp'],
+}
+
+export const metadata = {
+  title: game.title,
+  description: game.description,
+  robots: { index: false, follow: false },
+}
+
+## The goal
+
+Every character in [Wayfarer](/games/wayfarer) — heroes and enemies — is generated **locally**, on my own RTX 4090,
+from a text prompt. No paid services, no stock art. The pipeline has to turn a prompt like *"sexy valkyrie warrior,
+silver armor, glowing spear"* into a **game-ready sprite**: a cute, on-style pixel-art character on a **clean
+transparent background** that looks right on any background the game throws at it.
+
+That last part — *clean transparent edges* — turned out to be the hard problem, and it took several sessions to solve
+properly. This page documents the whole pipeline, including that detour, because the lesson was worth keeping.
+
+## The stack
+
+| Piece | Tool |
+|---|---|
+| Image model | **Illustrious-XL** (SDXL) via **ComfyUI**, driven over its HTTP API |
+| Style | a pixel-art **"birdman" LoRA** (clip-skip −2) for the consistent gacha look |
+| Background detection | **BiRefNet** (semantic — understands *"this shape is a character"*) |
+| Animation | **Wan 2.1 image-to-video** + a matching pixel-art animation LoRA |
+| Asset processing | **Node.js + sharp** (the matting, trimming, packing) |
+
+## Generating a character
+
+A single script (`forge.mjs`) does everything for a static character, talking to ComfyUI's API:
+
+1. **Generate** the character on a white background (Illustrious + the pixel LoRA, 30 steps).
+2. **Export two things**: the raw RGB image *and* a soft BiRefNet mask of where the character is.
+3. **Matte** the two together (see below) into a clean transparent PNG.
+4. **Trim** to the character and resize onto a 512×512 canvas.
+
+The prompts lean into a cute, sexy, gacha-splash style, with heavy negative prompts (`deformed, malformed, blob,
+fused, extra limbs…`) to suppress the rough anatomy AI loves to produce. One command re-rolls any character on a new
+seed until it lands.
+
+## The transparent-edge problem (and the wrong turns)
+
+Here's the thing that ate several sessions. When you cut a character out of its background, the pixels *right on the
+edge* are a **blend** of the character and the background. Generate on white, and every silhouette edge picks up a
+little white — so the cutout has a faint **white halo** that screams against the game's dark background.
+
+I tried, in order:
+
+- **Hard mask + erosion** — ate the silhouette and still leaked.
+- **"Remove pixels brighter than the core"** — couldn't tell a white *halo* from a white *outfit*. Fundamental
+  ambiguity: a high-opacity white edge pixel is indistinguishable from real white art.
+- **A dark outline over the edge** — bulletproof on a dark background, but it only covered the *outer* silhouette
+  (not the white trapped *inside* hair or on a thin blade), and it traced noise into black speckle on animation frames.
+- **A green screen** — the model **tinted the character** green (green hair). AI green-screens contaminate the subject.
+- **A dedicated pixel-art background-remover node** — its detection keys by *colour*, and our characters span the full
+  range (light skin to dark capes), so it couldn't separate them from the light-grey backdrop at all.
+
+Every one of these was fighting the symptom.
+
+## The actual fix: alpha matting
+
+The right answer is a standard technique I should have reached for first — **alpha matting with colour
+decontamination**. Instead of *keeping* the background-blended edge, you **recover the true edge colour** by
+subtracting the background the edge absorbed:
+
+```
+true_color = (pixel − (1 − alpha) · background) / alpha
+```
+
+With the soft BiRefNet mask as the alpha and the background colour sampled from the image corners, this gives every
+edge pixel its *real* colour back. A white-blended edge on a red cloak becomes red; a clean edge that's genuinely
+white stays white. The result is a cutout that looks clean on **any** background — verified against the harshest test,
+bright magenta, where any leftover white fringe would be obvious. No outline, no heuristics, no whack-a-mole.
+
+The whole messy post-processing pipeline got deleted and replaced with this one principled step.
+
+## Animation
+
+Characters can also be animated with **Wan 2.1 image-to-video**: feed it a sprite plus a motion prompt
+(`p1x3lStyl3, standing idle, breathing`), and it generates a short clip in the matching pixel-art style. A second
+pipeline removes the per-frame backgrounds, packs the frames into a spritesheet (with global alignment so the
+character doesn't jitter), and the game plays it as a looping idle. A `sharp` + `ffmpeg` step also exports a
+shareable transparent **animated WebP** for showing off.
+
+## What I'd tell past me
+
+Two lessons. First: **when an edge looks clean at low zoom on a dark background, it isn't — zoom to 8× and check on
+magenta.** Second, and bigger: **reach for the standard, principled technique before inventing heuristics.** Alpha
+matting is a solved problem; I spent days rebuilding a worse version of it by hand before doing it right.

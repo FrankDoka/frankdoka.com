@@ -72,19 +72,14 @@ This was the deepest rabbit hole. The roster is generated locally with **ComfyUI
 with a pixel-art LoRA) on an RTX 4090. The hard part wasn't generating the art — it was getting **clean transparent
 sprites** out of images that were painted on a solid background.
 
-A naive background cut leaves a halo, because the silhouette's edge pixels are a blend of the character and the
-background. I ended up building a multi-stage cleanup that targets four distinct artifacts, each with its own pass:
+A naive background cut leaves a white halo, because the silhouette's edge pixels are a blend of the character and the
+background. After a long detour through homemade heuristics (and a few dead ends), the fix turned out to be a standard
+technique I should have reached for first: **alpha matting with colour decontamination** — recovering each edge
+pixel's *true* colour instead of keeping the background blend. BiRefNet provides a semantic mask, and the matting
+subtracts the background the edge absorbed, so the cutout is clean on **any** background.
 
-1. **Alpha erosion** — peels the outer blend ring.
-2. **Light-rim trim** — the real insight: a halo is *always brighter than the character core behind it*, regardless of
-   hue, so detecting that brightness gradient removes lavender/pink/white rims alike — while a uniformly bright region
-   (a white robe) has no gradient and is left untouched.
-3. **Despeckle** — drops isolated mask-noise dots.
-4. **Interior-speck removal** — clears background bleed trapped *inside* dark regions like hair.
-
-Background removal itself uses **BiRefNet** for a semantic cut (it understands an under-arm gap isn't part of the
-character), and a retrofit tool can re-process existing art without regenerating it. The final sprites render at 512px
-with smooth filtering, so detail like eyes and pupils survives being scaled into the UI.
+**→ [Read the full art-pipeline deep dive](/games/wayfarer/art-pipeline)** — the whole process, the wrong turns, and
+the matting maths that finally solved it.
 
 ## Tech stack
 

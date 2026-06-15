@@ -115,6 +115,9 @@ export function loadProjects() {
 // nothing links to /games, and it's excluded from the sitemap, RSS, and on-site
 // search — but the pages render and are reachable by direct URL.
 export type Game = Project
-export function loadGames() {
-  return loadEntries<Project>('games', 'game', projectSchema)
+export async function loadGames() {
+  const all = await loadEntries<Project>('games', 'game', projectSchema)
+  // Only top-level games (/games/<slug>) appear in listings — sub-pages like
+  // /games/wayfarer/art-pipeline are linked from their parent, not listed.
+  return all.filter((g) => g.href.split('/').filter(Boolean).length === 2)
 }
