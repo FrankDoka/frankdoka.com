@@ -31,9 +31,18 @@ export function useTheme() {
 
 function getInitialTheme(): Theme {
   if (typeof window === 'undefined') return 'dark'
-  const stored = localStorage.getItem('theme') as Theme | null
-  if (stored) return stored
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+  // localStorage/matchMedia can throw "The operation is insecure" (a SecurityError
+  // DOMException) when a browser blocks storage access (e.g. strict tracking
+  // protection or disabled cookies). Guard every access so a blocked browser
+  // degrades to the default theme instead of crashing the whole app on mount.
+  try {
+    const stored = localStorage.getItem('theme') as Theme | null
+    if (stored === 'light' || stored === 'dark') return stored
+  } catch {}
+  try {
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+  } catch {}
+  return 'dark'
 }
 
 function applyTheme(theme: Theme) {
@@ -71,7 +80,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       return () => cancelAnimationFrame(raf)
     }
     applyTheme(theme)
-    localStorage.setItem('theme', theme)
+    try {
+      localStorage.setItem('theme', theme)
+    } catch {}
   }, [theme])
 
   const toggleTheme = useCallback(() => {
