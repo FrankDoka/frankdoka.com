@@ -4,19 +4,19 @@ export const lab = {
   order: 30,
   title: 'SpriteForge — Keeping Them Consistent',
   description:
-    'Re-posing a character into new stances with ControlNet + IPAdapter, where that approach drifts, and the plan to lock a character’s exact look with a per-character LoRA — the key to poses, gear swaps, and stable animation.',
+    'Re-posing a character into new stances with ControlNet + IPAdapter, where that approach drifts, and how a per-character LoRA finally locks a character’s exact look — same face, any pose, any gear.',
   abstract: (
     <p>
       A game needs the <em>same</em> character in many poses — and eventually in different gear. This is
-      how I re-pose a character while keeping their look, exactly where that drifts, and why a per-character
-      LoRA is the real answer for game-grade consistency.
+      how I re-pose a character while keeping their look, exactly where the quick approach drifts, and how a
+      per-character LoRA solved it: same face, any pose, any outfit.
     </p>
   ),
   startDate: '2026-06-15',
   date: '2026-06-15',
   image: cover,
   href: '/lab/spriteforge/consistency',
-  status: 'In progress',
+  status: 'Solved',
   type: 'Dev Log / Part 3',
   tags: ['ControlNet', 'OpenPose', 'IPAdapter', 'Per-character LoRA'],
 }
@@ -59,6 +59,26 @@ eventually *different gear* — "pretty close" isn't enough.
 The real tool is a **per-character LoRA**: train a tiny model on ~20–30 images of one character (which the
 pose pipeline above helps generate), and afterwards *any* pose, expression, outfit, or animation frame
 renders with her exact face and body locked in. The semantic approach is the bootstrap; the LoRA is the
-payoff. That's the piece I'm building next.
+payoff.
+
+## The fix, proven
+
+I trained a LoRA for the samurai — ~24 bootstrapped images, locally on the RTX 4090 via kohya
+`sd-scripts`, about 18 minutes. The result does what IPAdapter never could:
+
+![Same character in a new pose and two full gear swaps, identity intact](./lora-win.png)
+
+Same face, same skin, same hair — in a brand-new pose, in **golden plate armour**, and in a **casual
+hoodie**. The outfit changes completely while *she* stays exactly herself. That's the gear-swap capability
+a gacha game lives on.
+
+And across a whole pose set, her identity holds where the old approach drifted:
+
+![The samurai in six poses, identity consistent](./lora-poses.png)
+
+One honest caveat: a LoRA trained on mostly-standing images slightly *resists* the most dramatic poses at
+full strength — dialling its weight down (and ControlNet up) restores the motion, and a future version
+trained on more varied poses removes the tradeoff entirely. But the core problem — *the same character,
+on demand, in any outfit* — is solved. The recipe is reusable per character in about twenty minutes each.
 
 **Next: [Animating them →](/lab/spriteforge/animation)**
