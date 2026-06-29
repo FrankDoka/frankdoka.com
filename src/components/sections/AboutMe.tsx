@@ -97,10 +97,9 @@ export function AboutMe() {
             </p>
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button href="/Frank_Doka_Resume.pdf" invert>
-              Download Resume
+            <Button href="/about" invert>
+              More about me
             </Button>
-            <Button href="/about">More about me</Button>
           </div>
         </Container>
       </FadeIn>

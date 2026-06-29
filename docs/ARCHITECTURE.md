@@ -146,7 +146,7 @@ public/
   _headers                Cloudflare response headers (CSP, caching, OG types)
   fonts/                  Self-hosted Mona Sans variable font
   img/                    Portrait (WebP) + skill icons
-  icon-192.svg, icon-512.svg, sw.js, Frank_Doka_Resume.pdf
+  icon-192.svg, icon-512.svg, sw.js
 ```
 
 ## Testing
